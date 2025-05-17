@@ -1,4 +1,6 @@
-// Full A–Z list
+// script.js
+
+// 1. Full A–Z word list:
 const words = [
   'ant','alligator','apple','anchor','arrow','ax',
   'bag','bat','bed','bell','bin','bird','bus','box','bug','bun',
@@ -28,15 +30,19 @@ const words = [
   'zebra','zoo','zip','zipper','zero','zap','zigzag'
 ];
 
-const spinBtn    = document.getElementById('spin-button');
-const playBtn    = document.getElementById('play-sound-button');
-const imgEl      = document.getElementById('word-image');
-const qEl        = document.getElementById('question');
-const ansEl      = document.getElementById('answer');
-const letterSel  = document.getElementById('letter-select');
-let currentWord  = '';
+// 2. Grab DOM elements
+const spinBtn   = document.getElementById('spin-button');
+const playBtn   = document.getElementById('play-sound-button');
+const imgEl     = document.getElementById('word-image');
+const qEl       = document.getElementById('question');
+const ansEl     = document.getElementById('answer');
+const letterSel = document.getElementById('letter-select');
 
-// Normalize a word into a filename-safe string
+let currentWord = '';
+
+// 3. Helpers
+
+// Convert any word to a safe filename base (e.g. "question mark" → "question_mark")
 function toFilename(word) {
   return word
     .toLowerCase()
@@ -44,44 +50,55 @@ function toFilename(word) {
     .replace(/^_+|_+$/g, '');
 }
 
-// Filter by selected letter
+// Return only words that start with the selected letter (or all)
 function getPool() {
   const sel = letterSel.value;
   if (sel === 'all') return words;
   return words.filter(w => w[0].toLowerCase() === sel);
 }
 
+// 4. Spin logic
 spinBtn.addEventListener('click', () => {
+  // Clear previous answer, enable sound button
   ansEl.textContent = '';
   playBtn.disabled = false;
 
+  // Pick pool based on letter
   const pool = getPool();
-  if (!pool.length) {
+  if (pool.length === 0) {
     qEl.textContent = `No words for “${letterSel.value.toUpperCase()}”`;
-    imgEl.src = 'images/placeholder.png';
+    imgEl.src = 'images/placeholder.png';  // ensure this file exists
     return;
   }
 
+  // Select random word
   currentWord = pool[Math.floor(Math.random() * pool.length)];
-  const baseName = toFilename(currentWord);
-  const webpSrc  = `images/${baseName}.webp`;
-  const pngSrc   = `images/${baseName}.png`;
 
-  // Fallback: try .webp first, if it 404s, switch to .png
+  // Build filenames with prefix
+  const baseName = toFilename(currentWord);       // e.g. "bus"
+  const letter   = currentWord[0].toLowerCase();  // e.g. "b"
+  const webpSrc  = `images/${letter}_${baseName}.webp`;
+  const pngSrc   = `images/${letter}_${baseName}.png`;
+
+  // If WebP fails, fallback to PNG
   imgEl.onerror = () => {
-    imgEl.onerror = null;        // only fallback once
-    imgEl.src = pngSrc;
+    imgEl.onerror = null;   // only once
+    imgEl.src     = pngSrc;
   };
 
-  imgEl.src       = webpSrc;    // primary attempt
+  // Start with WebP
+  imgEl.src       = webpSrc;
   imgEl.alt       = currentWord;
   qEl.textContent = `What is the first sound of “${currentWord}”?`;
 });
 
+// 5. Play-sound logic
 playBtn.addEventListener('click', () => {
   if (!currentWord) return;
+
   const letter = currentWord[0].toLowerCase();
   const audio  = new Audio(`audio/${letter}.mp3`);
   audio.play();
+
   ansEl.textContent = `▶ The first sound is /${letter}/`;
 });
