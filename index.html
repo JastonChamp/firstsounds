@@ -10,36 +10,37 @@
   <div class="spinner-container">
     <h1>Phonemic Spinner</h1>
 
-    <label for="letter-select">Choose letter:</label>
-    <select id="letter-select">
-      <option value="all">All</option>
-      <option value="a">A</option>
-      <option value="b">B</option>
-      <option value="c">C</option>
-      <option value="d">D</option>
-      <option value="e">E</option>
-      <option value="f">F</option>
-      <option value="g">G</option>
-      <option value="h">H</option>
-      <option value="i">I</option>
-      <option value="j">J</option>
-      <option value="k">K</option>
-      <option value="l">L</option>
-      <option value="m">M</option>
-      <option value="n">N</option>
-      <option value="o">O</option>
-      <option value="p">P</option>
-      <option value="q">Q</option>
-      <option value="r">R</option>
-      <option value="s">S</option>
-      <option value="t">T</option>
-      <option value="u">U</option>
-      <option value="v">V</option>
-      <option value="w">W</option>
-      <option value="x">X</option>
-      <option value="y">Y</option>
-      <option value="z">Z</option>
-    </select>
+    <div id="letter-buttons">
+      <button class="letter-btn" data-letter="all" tabindex="0">All</button>
+      <button class="letter-btn" data-letter="a" tabindex="0">A</button>
+      <button class="letter-btn" data-letter="b" tabindex="0">B</button>
+      <button class="letter-btn" data-letter="c" tabindex="0">C</button>
+      <button class="letter-btn" data-letter="d" tabindex="0">D</button>
+      <button class="letter-btn" data-letter="e" tabindex="0">E</button>
+      <button class="letter-btn" data-letter="f" tabindex="0">F</button>
+      <button class="letter-btn" data-letter="g" tabindex="0">G</button>
+      <button class="letter-btn" data-letter="h" tabindex="0">H</button>
+      <button class="letter-btn" data-letter="i" tabindex="0">I</button>
+      <button class="letter-btn" data-letter="j" tabindex="0">J</button>
+      <button class="letter-btn" data-letter="k" tabindex="0">K</button>
+      <button class="letter-btn" data-letter="l" tabindex="0">L</button>
+      <button class="letter-btn" data-letter="m" tabindex="0">M</button>
+      <button class="letter-btn" data-letter="n" tabindex="0">N</button>
+      <button class="letter-btn" data-letter="o" tabindex="0">O</button>
+      <button class="letter-btn" data-letter="p" tabindex="0">P</button>
+      <button class="letter-btn" data-letter="q" tabindex="0">Q</button>
+      <button class="letter-btn" data-letter="r" tabindex="0">R</button>
+      <button class="letter-btn" data-letter="s" tabindex="0">S</button>
+      <button class="letter-btn" data-letter="t" tabindex="0">T</button>
+      <button class="letter-btn" data-letter="u" tabindex="0">U</button>
+      <button class="letter-btn" data-letter="v" tabindex="0">V</button>
+      <button class="letter-btn" data-letter="w" tabindex="0">W</button>
+      <button class="letter-btn" data-letter="x" tabindex="0">X</button>
+      <button class="letter-btn" data-letter="y"也好
+
+    "y" tabindex="0">Y</button>
+      <button class="letter-btn" data-letter="z" tabindex="0">Z</button>
+    </div>
 
     <div id="image-container">
       <img id="word-image" src="images/placeholder.png" alt="Press Spin">
@@ -48,8 +49,9 @@
     <p id="question">Press “Spin” to start!</p>
 
     <div class="controls">
-      <button id="spin-button">Spin</button>
-      <button id="play-sound-button" disabled>Play Sound</button>
+      <button id="spin-button" tabindex="0">Spin</button>
+      <button id="play-sound-button" tabindex="0">Play Sound</button>
+      <button id="read-question-button" tabindex="0">Read Question</button>
     </div>
 
     <p id="answer"></p>
