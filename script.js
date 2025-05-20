@@ -1,31 +1,30 @@
-// 1. Spinner items per letter (unchanged)
+// 1. Spinner items per letter (updated to match uploaded files)
 const spinnerItems = {
-  A: ["acorn", "alligator", "amulet", "anchor", "ant", "apple", "arrow", "astronaut", "axe"],
+  A: ["alligator", "amulet", "anchor", "ant", "apple", "arrow", "astronaut", "ax"],
   B: ["bag", "bat", "bed", "bell", "bird", "book", "box", "bread", "bug", "bus"],
-  C: ["cat", "car", "cake", "can", "cap", "cup", "corn", "coin", "comb"],
-  D: ["dog", "duck", "dinosaur", "drum", "doll", "door", "desk", "diamond", "dice"],
-  E: ["egg", "elephant", "elbow", "envelope", "engine", "elf", "end", "enter", "exit"],
+  C: ["cab", "can", "cap", "car", "cat", "cod", "cot", "cub", "cup"],
+  D: ["dog", "duck", "dinosaur", "drum", "doll", "door", "desk", "diamond", "die"],
+  E: ["egg", "elephant", "elf", "end", "enter", "envelope", "exit"],
   F: ["fish", "frog", "fan", "fire", "feather", "fork", "fox", "fence", "foot"],
-  G: ["goat", "gift", "girl", "guitar", "gate", "grapes", "glasses", "goose", "gloves"],
-  H: ["hat", "hen", "house", "hippo", "hammer", "hand", "heart", "helicopter", "hamburger"],
-  I: ["igloo", "insect", "ink", "iguana", "infant", "instruments", "invitation", "inside", "internet"],
-  J: ["jam", "jelly", "jacket", "juice", "jump", "jug", "jet", "jeep", "jar"],
+  G: ["goat", "gift", "girl", "guitar", "grapes", "glasses", "goose", "gloves"],
+  H: ["hat", "hen", "house", "hippo", "hammer", "hand", "helicopter", "hamburger"],
+  I: ["igloo", "insect", "ink", "iguana", "infant", "internet"],
+  J: ["jam", "jelly", "jacket", "juice", "jump", "jug", "jet", "jeep"],
   K: ["kangaroo", "kite", "key", "king", "kitten", "kettle", "kiwi", "keyboard", "kick"],
-  L: ["lion", "leaf", "lamp", "ladder", "lemon", "lollipop", "lock", "ladybird", "log"],
-  M: ["monkey", "moon", "mouse", "mug", "map", "milk", "magnet", "mushroom", "mirror"],
-  N: ["nose", "nest", "net", "nail", "nap", "neck", "nine", "notebook", "needle"],
-  O: ["octopus", "ostrich", "olive", "ox", "onion", "otter", "oven", "orange", "oar"],
-  P: ["pig", "pen", "pan", "pizza", "pencil", "peach", "panda", "pumpkin", "popcorn"],
-  Q: ["queen", "quilt", "quail", "question mark", "quick", "queue", "quack", "quiet"],
-  R: ["rabbit", "robot", "rainbow", "ring", "rose", "ruler", "rocket", "raft", "radio"],
-  S: ["sun", "sock", "sandwich", "star", "seal", "soap", "snowman", "scarf", "snail"],
-  T: ["tiger", "tap", "top", "tooth", "tent", "tomato", "train", "table", "tree"],
+  L: ["lion", "leaf", "lamp", "ladder", "lemon", "lollipop", "lock", "ladybug", "log"],
+  M: ["monkey", "moon", "mouse", "mug", "map", "milk", "mop"],
+  N: ["nose", "nest", "net", "nail", "nap", "nine", "note", "needle"],
+  O: ["octopus", "ostrich", "olive", "ox", "onion"],
+  P: ["pig", "pen", "pan", "pizza", "pencil", "peach", "panda", "pumpkin"],
+  Q: ["queen", "quilt", "quial", "quick", "queue", "quiet"],
+  R: ["rabbit", "robot", "rainbow", "ring", "rose", "ruler", "rocket", "raft"],
+  S: ["sun", "sock", "sandwich", "star", "seal", "soap", "snowman"],
+  T: ["tiger", "tap", "top", "tooth", "tent", "tomato", "train", "tree"],
   U: ["umbrella", "up", "upset", "unzip", "upstairs", "undo"],
-  V: ["van", "vase", "violin", "vegetables", "vest", "vulture", "volcano", "vacuum"],
-  W: ["whale", "watch", "watermelon", "web", "wagon", "worm", "witch", "wheel", "window"],
-  X: ["box", "fox", "mix", "fix", "six", "axe", "ox", "wax", "T-Rex"],
-  Y: ["yarn", "yam", "yak", "yawn", "yo-yo", "yolk", "yacht"],
-  Z: ["zebra", "zoo", "zip", "zipper", "zero", "zap", "zigzag"]
+  V: ["van", "vase", "violin", "vegetables", "vest", "vulture", "volcano"],
+  W: ["whale", "watch", "watermelon", "web", "wagon", "worm", "witch", "window"],
+  Y: ["yarn", "yam", "yawn", "yolk", "yoyo"],
+  Z: ["zebra", "zoo", "zip", "zero", "zap", "zigzag"]
 };
 
 // 2. Grab DOM elements
@@ -101,27 +100,27 @@ spinBtn.addEventListener('click', () => {
 
   imgEl.onerror = null;
   imgEl.onload = () => {
-    console.log(`Successfully loaded image: ${imgEl.src}`); // Debug log
+    console.log(`Successfully loaded image: ${imgEl.src}`);
     qEl.textContent = `What is the first sound of “${currentWord}”?`;
     currentWordEl.textContent = currentWord;
   };
   imgEl.onerror = () => {
-    console.log(`Failed to load WebP: ${webpSrc}, trying PNG: ${pngSrc}`); // Debug log
+    console.log(`Failed to load WebP: ${webpSrc}, trying PNG: ${pngSrc}`);
     imgEl.onerror = () => {
-      console.log(`Failed to load PNG: ${pngSrc}, reverting to placeholder`); // Debug log
+      console.log(`Failed to load PNG: ${pngSrc}, reverting to placeholder`);
       imgEl.src = 'images/placeholder.png';
       qEl.textContent = 'Oops! Image not found. Try spinning again!';
       currentWordEl.textContent = '';
     };
     imgEl.onload = () => {
-      console.log(`Successfully loaded PNG: ${pngSrc}`); // Debug log
+      console.log(`Successfully loaded PNG: ${pngSrc}`);
       qEl.textContent = `What is the first sound of “${currentWord}”?`;
       currentWordEl.textContent = currentWord;
     };
     imgEl.src = pngSrc;
   };
 
-  console.log(`Attempting to load image for "${currentWord}": ${webpSrc}`); // Debug log
+  console.log(`Attempting to load image for "${currentWord}": ${webpSrc}`);
   imgEl.src = webpSrc;
   imgEl.alt = currentWord;
 });
