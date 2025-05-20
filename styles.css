@@ -12,7 +12,7 @@ body {
   background: #fff;
   padding: 2rem;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   text-align: center;
   width: 320px;
 }
@@ -21,17 +21,30 @@ h1 {
   margin-bottom: 1rem;
 }
 
-label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: bold;
+#letter-buttons {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-select {
+.letter-btn {
   font-size: 1rem;
-  padding: 0.3rem;
-  margin-bottom: 1rem;
-  width: 100%;
+  padding: 0.3rem 0.6rem;
+  margin: 0.2rem;
+  background-color: #ffcc00;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.letter-btn:hover {
+  background-color: #ffaa00;
+}
+
+.letter-btn:focus {
+  background-color: #ffaa00;
+  outline: 2px solid #0055aa;
 }
 
 #image-container {
@@ -42,6 +55,15 @@ select {
 #image-container img {
   max-height: 100%;
   max-width: 100%;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.spinning {
+  animation: spin 1s ease-in-out;
 }
 
 .controls {
@@ -55,11 +77,16 @@ button {
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  background-color: #0077cc;
+  background-color: #0055aa; /* Darker blue for better contrast */
   color: #fff;
 }
 
 button:disabled {
-  background-color: #ccc;
+  background-color: #999;
+  color: #ddd;
   cursor: not-allowed;
+}
+
+button:focus {
+  outline: 2px solid #ffcc00;
 }
