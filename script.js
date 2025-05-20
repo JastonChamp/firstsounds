@@ -1,34 +1,286 @@
 // script.js
 
-// 1. Full A–Z word list:
-const words = [
-  'ant','alligator','apple','anchor','arrow','ax',
-  'bag','bat','bed','bell','bin','bird','bus','box','bug','bun',
-  'cab','can','cap','car','cat','cop','cup','cut','cow','corn',
-  'dad','dog','dig','duck','dot','den','dish','drum','doll','door',
-  'egg','elk','elf','end','engine','envelope','exit',
-  'fan','fig','fin','fish','fox','fork','frog','foot','flag','fire',
-  'gap','gas','gift','goat','gum','gun','girl','goose','grapes','grass',
-  'hat','hen','hop','hot','hut','hill','horse','heart','hammer','hand',
-  'igloo','insect','ink','iguanodon','inch','inn',
-  'jam','jet','jug','jump','jelly','jacket','jar','jeans','juice','jigsaw',
-  'kangaroo','kite','key','kid','kitten','kettle','kick','king','koala','knee',
-  'ladder','ladybug','lamp','leaf','lemon','lion','lock','log','lollipop',
-  'monkey','mop','mug','map','moon','mat','mouse','milk','mittens',
-  'nose','nest','net','nail','nap','neck','nine','notebook','needle',
-  'octopus','ostrich','olive','ox','onion','otter','oven','orange','oar',
-  'pig','pen','pan','pizza','pencil','peach','panda','pumpkin','popcorn',
-  'queen','quilt','quail','question mark','quick','queue','quack','quiet',
-  'rabbit','robot','rainbow','ring','rose','ruler','rocket','raft','radio',
-  'sun','sock','sandwich','star','seal','soap','snowman','scarf','snail',
-  'tiger','tap','top','tooth','tent','tomato','train','table','tree',
-  'umbrella','up','upset','unzip','upstairs','undo',
-  'van','vase','violin','vegetables','vest','vulture','volcano','vacuum',
-  'whale','watch','watermelon','web','wagon','worm','witch','wheel','window',
-  'box','fox','mix','fix','six','axe','ox','wax','t-rex',
-  'yarn','yam','yak','yawn','yo-yo','yolk','yacht',
-  'zebra','zoo','zip','zipper','zero','zap','zigzag'
-];
+// 1. Spinner items per letter (exactly your A–Z master list)
+const spinnerItems = {
+  A: [
+    "acorn",
+    "alligator",
+    "amulet",
+    "anchor",
+    "ant",
+    "apple",
+    "arrow",
+    "astronaut",
+    "axe"
+  ],
+  B: [
+    "bag",
+    "bat",
+    "bed",
+    "bell",
+    "bird",
+    "book",
+    "box",
+    "bread",
+    "bug",
+    "bus"
+  ],
+  C: [
+    "cat",
+    "car",
+    "cake",
+    "can",
+    "cap",
+    "cup",
+    "corn",
+    "coin",
+    "comb"
+  ],
+  D: [
+    "dog",
+    "duck",
+    "dinosaur",
+    "drum",
+    "doll",
+    "door",
+    "desk",
+    "diamond",
+    "dice"
+  ],
+  E: [
+    "egg",
+    "elephant",
+    "elbow",
+    "envelope",
+    "engine",
+    "elf",
+    "end",
+    "enter",
+    "exit"
+  ],
+  F: [
+    "fish",
+    "frog",
+    "fan",
+    "fire",
+    "feather",
+    "fork",
+    "fox",
+    "fence",
+    "foot"
+  ],
+  G: [
+    "goat",
+    "gift",
+    "girl",
+    "guitar",
+    "gate",
+    "grapes",
+    "glasses",
+    "goose",
+    "gloves"
+  ],
+  H: [
+    "hat",
+    "hen",
+    "house",
+    "hippo",
+    "hammer",
+    "hand",
+    "heart",
+    "helicopter",
+    "hamburger"
+  ],
+  I: [
+    "igloo",
+    "insect",
+    "ink",
+    "iguana",
+    "infant",
+    "instruments",
+    "invitation",
+    "inside",
+    "internet"
+  ],
+  J: [
+    "jam",
+    "jelly",
+    "jacket",
+    "juice",
+    "jump",
+    "jug",
+    "jet",
+    "jeep",
+    "jar"
+  ],
+  K: [
+    "kangaroo",
+    "kite",
+    "key",
+    "king",
+    "kitten",
+    "kettle",
+    "kiwi",
+    "keyboard",
+    "kick"
+  ],
+  L: [
+    "lion",
+    "leaf",
+    "lamp",
+    "ladder",
+    "lemon",
+    "lollipop",
+    "lock",
+    "ladybird",
+    "log"
+  ],
+  M: [
+    "monkey",
+    "moon",
+    "mouse",
+    "mug",
+    "map",
+    "milk",
+    "magnet",
+    "mushroom",
+    "mirror"
+  ],
+  N: [
+    "nose",
+    "nest",
+    "net",
+    "nail",
+    "nap",
+    "neck",
+    "nine",
+    "notebook",
+    "needle"
+  ],
+  O: [
+    "octopus",
+    "ostrich",
+    "olive",
+    "ox",
+    "onion",
+    "otter",
+    "oven",
+    "orange",
+    "oar"
+  ],
+  P: [
+    "pig",
+    "pen",
+    "pan",
+    "pizza",
+    "pencil",
+    "peach",
+    "panda",
+    "pumpkin",
+    "popcorn"
+  ],
+  Q: [
+    "queen",
+    "quilt",
+    "quail",
+    "question mark",
+    "quick",
+    "queue",
+    "quack",
+    "quiet"
+  ],
+  R: [
+    "rabbit",
+    "robot",
+    "rainbow",
+    "ring",
+    "rose",
+    "ruler",
+    "rocket",
+    "raft",
+    "radio"
+  ],
+  S: [
+    "sun",
+    "sock",
+    "sandwich",
+    "star",
+    "seal",
+    "soap",
+    "snowman",
+    "scarf",
+    "snail"
+  ],
+  T: [
+    "tiger",
+    "tap",
+    "top",
+    "tooth",
+    "tent",
+    "tomato",
+    "train",
+    "table",
+    "tree"
+  ],
+  U: [
+    "umbrella",
+    "up",
+    "upset",
+    "unzip",
+    "upstairs",
+    "undo"
+  ],
+  V: [
+    "van",
+    "vase",
+    "violin",
+    "vegetables",
+    "vest",
+    "vulture",
+    "volcano",
+    "vacuum"
+  ],
+  W: [
+    "whale",
+    "watch",
+    "watermelon",
+    "web",
+    "wagon",
+    "worm",
+    "witch",
+    "wheel",
+    "window"
+  ],
+  X: [
+    "box",
+    "fox",
+    "mix",
+    "fix",
+    "six",
+    "axe",
+    "ox",
+    "wax",
+    "T-Rex"
+  ],
+  Y: [
+    "yarn",
+    "yam",
+    "yak",
+    "yawn",
+    "yo-yo",
+    "yolk",
+    "yacht"
+  ],
+  Z: [
+    "zebra",
+    "zoo",
+    "zip",
+    "zipper",
+    "zero",
+    "zap",
+    "zigzag"
+  ]
+};
 
 // 2. Grab DOM elements
 const spinBtn   = document.getElementById('spin-button');
@@ -42,7 +294,7 @@ let currentWord = '';
 
 // 3. Helpers
 
-// Convert any word to a safe filename base (e.g. "question mark" → "question_mark")
+// Convert a word into a filename-safe base (e.g. "question mark" → "question_mark")
 function toFilename(word) {
   return word
     .toLowerCase()
@@ -50,43 +302,42 @@ function toFilename(word) {
     .replace(/^_+|_+$/g, '');
 }
 
-// Return only words that start with the selected letter (or all)
+// Return the current pool based on selection ("all" flattens every letter)
 function getPool() {
   const sel = letterSel.value;
-  if (sel === 'all') return words;
-  return words.filter(w => w[0].toLowerCase() === sel);
+  if (sel === 'all') {
+    return Object.values(spinnerItems).flat();
+  }
+  const arr = spinnerItems[sel.toUpperCase()];
+  return arr ? [...arr] : [];
 }
 
 // 4. Spin logic
 spinBtn.addEventListener('click', () => {
-  // Clear previous answer, enable sound button
+  // reset
   ansEl.textContent = '';
   playBtn.disabled = false;
 
-  // Pick pool based on letter
   const pool = getPool();
-  if (pool.length === 0) {
+  if (!pool.length) {
     qEl.textContent = `No words for “${letterSel.value.toUpperCase()}”`;
-    imgEl.src = 'images/placeholder.png';  // ensure this file exists
+    imgEl.src = 'images/placeholder.png';
     return;
   }
 
-  // Select random word
+  // pick a random word
   currentWord = pool[Math.floor(Math.random() * pool.length)];
-
-  // Build filenames with prefix
-  const baseName = toFilename(currentWord);       // e.g. "bus"
-  const letter   = currentWord[0].toLowerCase();  // e.g. "b"
+  const baseName = toFilename(currentWord);        // e.g. "bus"
+  const letter   = currentWord[0].toLowerCase();   // e.g. "b"
   const webpSrc  = `images/${letter}_${baseName}.webp`;
   const pngSrc   = `images/${letter}_${baseName}.png`;
 
-  // If WebP fails, fallback to PNG
+  // fallback from WebP to PNG
   imgEl.onerror = () => {
-    imgEl.onerror = null;   // only once
+    imgEl.onerror = null;
     imgEl.src     = pngSrc;
   };
 
-  // Start with WebP
   imgEl.src       = webpSrc;
   imgEl.alt       = currentWord;
   qEl.textContent = `What is the first sound of “${currentWord}”?`;
@@ -95,10 +346,8 @@ spinBtn.addEventListener('click', () => {
 // 5. Play-sound logic
 playBtn.addEventListener('click', () => {
   if (!currentWord) return;
-
   const letter = currentWord[0].toLowerCase();
   const audio  = new Audio(`audio/${letter}.mp3`);
   audio.play();
-
   ansEl.textContent = `▶ The first sound is /${letter}/`;
 });
