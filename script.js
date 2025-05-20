@@ -1,4 +1,4 @@
-// 1. Spinner items per letter (unchanged as per your request)
+// 1. Spinner items per letter (unchanged)
 const spinnerItems = {
   A: ["acorn", "alligator", "amulet", "anchor", "ant", "apple", "arrow", "astronaut", "axe"],
   B: ["bag", "bat", "bed", "bell", "bird", "book", "box", "bread", "bug", "bus"],
@@ -85,6 +85,7 @@ spinBtn.addEventListener('click', () => {
   if (!pool.length) {
     qEl.textContent = `No words for “${selectedLetter.toUpperCase()}”`;
     imgEl.src = 'images/placeholder.png';
+    imgEl.onerror = null; // Clear any previous error handlers
     return;
   }
 
@@ -94,15 +95,28 @@ spinBtn.addEventListener('click', () => {
   const webpSrc = `images/${letter}_${baseName}.webp`;
   const pngSrc = `images/${letter}_${baseName}.png`;
 
+  // Reset the image element's error handler and source
+  imgEl.onerror = null;
+  imgEl.onload = () => {
+    // Image loaded successfully, update the question
+    qEl.textContent = `What is the first sound of “${currentWord}”?`;
+  };
   imgEl.onerror = () => {
-    imgEl.onerror = null;
+    // Try the PNG fallback
+    imgEl.onerror = () => {
+      // Both WebP and PNG failed
+      imgEl.src = 'images/placeholder.png';
+      qEl.textContent = 'Oops! Image not found. Try spinning again!';
+    };
+    imgEl.onload = () => {
+      // PNG loaded successfully
+      qEl.textContent = `What is the first sound of “${currentWord}”?`;
+    };
     imgEl.src = pngSrc;
-    qEl.textContent = 'Oops! Image not found. Try spinning again!';
   };
 
   imgEl.src = webpSrc;
   imgEl.alt = currentWord;
-  qEl.textContent = `What is the first sound of “${currentWord}”?`;
 });
 
 // 6. Play-sound logic
