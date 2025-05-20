@@ -96,11 +96,12 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative; /* For debugging alignment if needed */
 }
 
 #image-container img {
-  max-height: 80%; /* Reduced from 90% to fit within the frame's transparent center (80% of 220px = 176px) */
-  max-width: 80%;  /* Reduced from 90% to fit within the frame's transparent center */
+  max-height: 75%; /* Reduced from 90% to fit within the frame's transparent center (75% of 220px = 165px) */
+  max-width: 75%;  /* Reduced from 90% to fit within the frame's transparent center */
 }
 
 @keyframes spin {
