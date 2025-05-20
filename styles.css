@@ -99,8 +99,8 @@ h1 {
 }
 
 #image-container img {
-  max-height: 90%;
-  max-width: 90%;
+  max-height: 80%; /* Reduced from 90% to fit within the frame's transparent center (80% of 220px = 176px) */
+  max-width: 80%;  /* Reduced from 90% to fit within the frame's transparent center */
 }
 
 @keyframes spin {
