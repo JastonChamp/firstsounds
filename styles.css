@@ -1,6 +1,6 @@
 body {
-  font-family: sans-serif;
-  background: #f5f5f5;
+  font-family: 'Comic Neue', sans-serif;
+  background: linear-gradient(135deg, #f0e4ff 0%, #ffe4e1 100%);
   display: flex;
   height: 100vh;
   align-items: center;
@@ -11,50 +11,88 @@ body {
 .spinner-container {
   background: #fff;
   padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
   text-align: center;
-  width: 320px;
+  width: 360px;
+  border: 3px solid #ffeb3b;
+}
+
+.welcome-message {
+  position: relative;
+}
+
+.mascot {
+  width: 60px;
+  position: absolute;
+  top: -40px;
+  left: 20px;
 }
 
 h1 {
-  margin-bottom: 1rem;
+  font-size: 2rem;
+  color: #ff6f61;
+  margin: 0 0 1.5rem;
 }
 
-#letter-buttons {
-  margin-bottom: 1rem;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+.letter-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .letter-btn {
-  font-size: 1rem;
-  padding: 0.3rem 0.6rem;
-  margin: 0.2rem;
-  background-color: #ffcc00;
-  border: none;
-  border-radius: 6px;
+  font-family: 'Comic Neue', sans-serif;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 0.5rem;
+  background-color: #ffeb3b;
+  border: 2px solid #ffb300;
+  border-radius: 10px;
   cursor: pointer;
+  transition: transform 0.2s, background-color 0.3s;
 }
 
 .letter-btn:hover {
-  background-color: #ffaa00;
+  background-color: #ffd700;
+  transform: scale(1.1);
 }
 
-.letter-btn:focus {
-  background-color: #ffaa00;
-  outline: 2px solid #0055aa;
+.letter-btn:focus, .letter-btn.selected {
+  background-color: #ffd700;
+  border: 3px solid #ff6f61;
+  outline: none;
 }
 
-#image-container {
-  height: 200px;
+.word-display {
   margin-bottom: 1rem;
 }
 
+#current-word {
+  font-size: 1.5rem;
+  color: #4a90e2;
+  font-weight: bold;
+  text-transform: capitalize;
+  background: #e3f2fd;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  border: 2px dashed #4a90e2;
+}
+
+.image-frame {
+  height: 220px;
+  margin-bottom: 1.5rem;
+  background: url('images/frame-bg.png') no-repeat center center;
+  background-size: contain;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 #image-container img {
-  max-height: 100%;
-  max-width: 100%;
+  max-height: 90%;
+  max-width: 90%;
 }
 
 @keyframes spin {
@@ -62,23 +100,51 @@ h1 {
   100% { transform: rotate(360deg); }
 }
 
+@keyframes bounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
 .spinning {
-  animation: spin 1s ease-in-out;
+  animation: spin 1s ease-in-out, bounce 0.5s ease-in-out 1s;
+}
+
+#question {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 1.5rem;
 }
 
 .controls {
-  margin: 1rem 0;
+  margin: 1.5rem 0;
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
 }
 
 button {
-  font-size: 1rem;
-  padding: 0.5rem 1rem;
-  margin: 0 0.5rem;
+  font-family: 'Comic Neue', sans-serif;
+  font-size: 1.1rem;
+  font-weight: bold;
+  padding: 0.6rem 1.2rem;
   border: none;
-  border-radius: 6px;
+  border-radius: 12px;
   cursor: pointer;
-  background-color: #0055aa; /* Darker blue for better contrast */
+  background-color: #4a90e2;
   color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: transform 0.2s, background-color 0.3s;
+}
+
+button .icon {
+  font-size: 1.3rem;
+}
+
+button:hover {
+  background-color: #357abd;
+  transform: scale(1.05);
 }
 
 button:disabled {
@@ -88,5 +154,11 @@ button:disabled {
 }
 
 button:focus {
-  outline: 2px solid #ffcc00;
+  outline: 3px solid #ffeb3b;
+}
+
+#answer {
+  font-size: 1.1rem;
+  color: #2e7d32;
+  margin-top: 1rem;
 }
