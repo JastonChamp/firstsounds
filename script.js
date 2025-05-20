@@ -74,7 +74,7 @@ letterButtons.forEach(btn => {
     selectedLetter = btn.dataset.letter;
     letterButtons.forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
-    const popSound = new Audio('audio/pop.mp3'); // Assumes a pop sound exists
+    const popSound = new Audio('audio/pop.mp3');
     popSound.play();
   });
 });
@@ -101,22 +101,27 @@ spinBtn.addEventListener('click', () => {
 
   imgEl.onerror = null;
   imgEl.onload = () => {
+    console.log(`Successfully loaded image: ${imgEl.src}`); // Debug log
     qEl.textContent = `What is the first sound of “${currentWord}”?`;
     currentWordEl.textContent = currentWord;
   };
   imgEl.onerror = () => {
+    console.log(`Failed to load WebP: ${webpSrc}, trying PNG: ${pngSrc}`); // Debug log
     imgEl.onerror = () => {
+      console.log(`Failed to load PNG: ${pngSrc}, reverting to placeholder`); // Debug log
       imgEl.src = 'images/placeholder.png';
       qEl.textContent = 'Oops! Image not found. Try spinning again!';
       currentWordEl.textContent = '';
     };
     imgEl.onload = () => {
+      console.log(`Successfully loaded PNG: ${pngSrc}`); // Debug log
       qEl.textContent = `What is the first sound of “${currentWord}”?`;
       currentWordEl.textContent = currentWord;
     };
     imgEl.src = pngSrc;
   };
 
+  console.log(`Attempting to load image for "${currentWord}": ${webpSrc}`); // Debug log
   imgEl.src = webpSrc;
   imgEl.alt = currentWord;
 });
