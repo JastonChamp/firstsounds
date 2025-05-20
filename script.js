@@ -35,6 +35,7 @@ const readQuestionBtn = document.getElementById('read-question-button');
 const imgEl = document.getElementById('word-image');
 const qEl = document.getElementById('question');
 const ansEl = document.getElementById('answer');
+const currentWordEl = document.getElementById('current-word');
 const letterButtons = document.querySelectorAll('.letter-btn');
 
 let currentWord = '';
@@ -51,7 +52,7 @@ function toFilename(word) {
 
 function getPool() {
   let pool = selectedLetter === 'all' ? Object.values(spinnerItems).flat() : spinnerItems[selectedLetter.toUpperCase()] || [];
-  return pool.filter(word => word.length <= 5); // Progression: Start with shorter words
+  return pool.filter(word => word.length <= 5);
 }
 
 function preloadAssets() {
@@ -71,8 +72,10 @@ function preloadAssets() {
 letterButtons.forEach(btn => {
   btn.addEventListener('click', () => {
     selectedLetter = btn.dataset.letter;
-    letterButtons.forEach(b => b.style.backgroundColor = '#ffcc00');
-    btn.style.backgroundColor = '#ffaa00';
+    letterButtons.forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    const popSound = new Audio('audio/pop.mp3'); // Assumes a pop sound exists
+    popSound.play();
   });
 });
 
@@ -84,8 +87,9 @@ spinBtn.addEventListener('click', () => {
   const pool = getPool();
   if (!pool.length) {
     qEl.textContent = `No words for “${selectedLetter.toUpperCase()}”`;
+    currentWordEl.textContent = '';
     imgEl.src = 'images/placeholder.png';
-    imgEl.onerror = null; // Clear any previous error handlers
+    imgEl.onerror = null;
     return;
   }
 
@@ -95,22 +99,20 @@ spinBtn.addEventListener('click', () => {
   const webpSrc = `images/${letter}_${baseName}.webp`;
   const pngSrc = `images/${letter}_${baseName}.png`;
 
-  // Reset the image element's error handler and source
   imgEl.onerror = null;
   imgEl.onload = () => {
-    // Image loaded successfully, update the question
     qEl.textContent = `What is the first sound of “${currentWord}”?`;
+    currentWordEl.textContent = currentWord;
   };
   imgEl.onerror = () => {
-    // Try the PNG fallback
     imgEl.onerror = () => {
-      // Both WebP and PNG failed
       imgEl.src = 'images/placeholder.png';
       qEl.textContent = 'Oops! Image not found. Try spinning again!';
+      currentWordEl.textContent = '';
     };
     imgEl.onload = () => {
-      // PNG loaded successfully
       qEl.textContent = `What is the first sound of “${currentWord}”?`;
+      currentWordEl.textContent = currentWord;
     };
     imgEl.src = pngSrc;
   };
@@ -122,7 +124,7 @@ spinBtn.addEventListener('click', () => {
 // 6. Play-sound logic
 playBtn.addEventListener('click', () => {
   if (!currentWord) {
-    const audio = new Audio('audio/instruction.mp3'); // Assumes an instruction audio exists
+    const audio = new Audio('audio/instruction.mp3');
     audio.play();
     ansEl.textContent = '▶ Spin to hear a sound!';
     return;
