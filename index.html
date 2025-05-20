@@ -5,12 +5,16 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>Phonemic Awareness Spinner</title>
   <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="spinner-container">
-    <h1>Phonemic Spinner</h1>
+    <div class="welcome-message">
+      <img src="images/mascot.png" alt="Mascot" class="mascot">
+      <h1>Phonemic Spinner</h1>
+    </div>
 
-    <div id="letter-buttons">
+    <div id="letter-buttons" class="letter-grid">
       <button class="letter-btn" data-letter="all" tabindex="0">All</button>
       <button class="letter-btn" data-letter="a" tabindex="0">A</button>
       <button class="letter-btn" data-letter="b" tabindex="0">B</button>
@@ -36,22 +40,30 @@
       <button class="letter-btn" data-letter="v" tabindex="0">V</button>
       <button class="letter-btn" data-letter="w" tabindex="0">W</button>
       <button class="letter-btn" data-letter="x" tabindex="0">X</button>
-      <button class="letter-btn" data-letter="y"也好
-
-    "y" tabindex="0">Y</button>
+      <button class="letter-btn" data-letter="y" tabindex="0">Y</button>
       <button class="letter-btn" data-letter="z" tabindex="0">Z</button>
     </div>
 
-    <div id="image-container">
+    <div class="word-display">
+      <p id="current-word"></p>
+    </div>
+
+    <div id="image-container" class="image-frame">
       <img id="word-image" src="images/placeholder.png" alt="Press Spin">
     </div>
 
     <p id="question">Press “Spin” to start!</p>
 
     <div class="controls">
-      <button id="spin-button" tabindex="0">Spin</button>
-      <button id="play-sound-button" tabindex="0">Play Sound</button>
-      <button id="read-question-button" tabindex="0">Read Question</button>
+      <button id="spin-button" tabindex="0">
+        <span class="icon">↻</span> Spin
+      </button>
+      <button id="play-sound-button" tabindex="0">
+        <span class="icon">🔊</span> Play Sound
+      </button>
+      <button id="read-question-button" tabindex="0">
+        <span class="icon">💬</span> Read Question
+      </button>
     </div>
 
     <p id="answer"></p>
