@@ -94,30 +94,30 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative; /* Allows absolute positioning of children */
+  position: relative;
 }
 
 #image-container img {
-  max-height: 75%; /* 165px, fits within the frame's transparent center */
-  max-width: 75%;
-  position: absolute; /* Position both images absolutely to stack them */
+  max-height: 70%; /* Reduced from 75% to 70% (154px) to fit better within the frame */
+  max-width: 70%;
+  position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); /* Center the images */
+  transform: translate(-50%, -50%);
 }
 
 #word-image {
-  z-index: 1; /* Word image behind the frame */
+  z-index: 1;
 }
 
 #frame-overlay {
-  z-index: 2; /* Frame overlay on top */
-  width: 220px; /* Match the container size */
+  z-index: 2;
+  width: 220px;
   height: 220px;
 }
 
 @keyframes spin {
-  0% { transform: translate(-50%, -50%) rotate(0deg); } /* Adjusted for absolute positioning */
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
   100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
