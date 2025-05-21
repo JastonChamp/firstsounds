@@ -14,6 +14,54 @@ body {
   margin: 0;
 }
 
+.onboarding-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 20px;
+  text-align: center;
+  max-width: 300px;
+  border: 3px solid #ffeb3b;
+}
+
+.modal-mascot {
+  width: 80px;
+  margin-bottom: 1rem;
+}
+
+.modal-content p {
+  font-size: 1.2rem;
+  color: #ff6f61;
+  margin-bottom: 1rem;
+}
+
+#start-button {
+  font-family: 'Comic Neue', sans-serif;
+  font-size: 1.2rem;
+  padding: 0.5rem 1rem;
+  background: #4a90e2;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#start-button:hover {
+  background: #357abd;
+}
+
 .spinner-container {
   background: #fff;
   padding: 2rem;
@@ -23,6 +71,16 @@ body {
   width: 90%;
   max-width: 360px;
   border: 3px solid #ffeb3b;
+  position: relative;
+}
+
+.star-counter {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 1.5rem;
+  color: #ffeb3b;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .welcome-message {
@@ -37,16 +95,45 @@ body {
 }
 
 h1 {
-  font-size: 2rem;
+  font-size: 2.5rem;
   color: #ff6f61;
   margin: 0 0 1.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.letter-group-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.tab-btn {
+  font-family: 'Comic Neue', sans-serif;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  background-color: #ffccbc;
+  border: 2px solid #ff8a65;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.tab-btn:hover, .tab-btn.selected {
+  background-color: #ff8a65;
+  color: #fff;
 }
 
 .letter-grid {
-  display: grid;
+  display: none;
   grid-template-columns: repeat(5, 1fr);
   gap: 0.8rem;
   margin-bottom: 1.5rem;
+}
+
+.letter-grid.active {
+  display: grid;
 }
 
 .letter-btn {
@@ -59,17 +146,26 @@ h1 {
   border-radius: 10px;
   cursor: pointer;
   transition: transform 0.2s, background-color 0.3s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .letter-btn:hover {
   background-color: #ffd700;
   transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .letter-btn:focus, .letter-btn.selected {
   background-color: #ffd700;
   border: 3px solid #ff6f61;
   outline: none;
+  animation: pulse 0.5s ease-in-out;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
 }
 
 .word-display {
@@ -78,7 +174,7 @@ h1 {
 }
 
 #current-word {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   color: #4a90e2;
   font-weight: bold;
   text-transform: capitalize;
@@ -90,19 +186,19 @@ h1 {
 
 .image-frame {
   height: 220px;
-  width: 220px; /* Ensure the container has a defined width */
-  margin: 0 auto 1.5rem; /* Centered with margin-bottom */
-  position: relative; /* For absolute positioning of children */
+  width: 220px;
+  margin: 0 auto 1.5rem;
+  position: relative;
 }
 
 #word-image {
-  height: 160px; /* Fixed size to fit within the frame's transparent center */
-  width: 160px;
+  height: 170px;
+  width: 170px;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 1; /* Place behind the frame overlay */
+  z-index: 1;
 }
 
 #frame-overlay {
@@ -111,7 +207,7 @@ h1 {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 2; /* Frame overlay on top */
+  z-index: 2;
 }
 
 @keyframes spin {
@@ -129,9 +225,14 @@ h1 {
 }
 
 #question {
-  font-size: 1.2rem;
-  color: #333;
+  font-size: 1.4rem;
+  color: #4a90e2;
+  font-weight: bold;
   margin-bottom: 1.5rem;
+  background: #fff;
+  padding: 0.5rem;
+  border-radius: 10px;
+  border: 2px solid #4a90e2;
 }
 
 .controls {
@@ -143,31 +244,33 @@ h1 {
 
 button {
   font-family: 'Comic Neue', sans-serif;
-  font-size: 1.1rem;
-  font-weight: bold;
-  padding: 0.6rem 1.2rem;
+  font-size: 0;
+  padding: 0.8rem;
   border: none;
   border-radius: 12px;
   cursor: pointer;
-  background-color: #4a90e2;
+  background: linear-gradient(135deg, #4a90e2, #357abd);
   color: #fff;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  transition: transform 0.2s, background-color 0.3s;
+  transition: transform 0.2s, background 0.3s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 button .icon {
-  font-size: 1.3rem;
+  font-size: 1.8rem;
+  color: #ffeb3b;
 }
 
 button:hover {
-  background-color: #357abd;
+  background: linear-gradient(135deg, #357abd, #4a90e2);
   transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 button:disabled {
-  background-color: #999;
+  background: #999;
   color: #ddd;
   cursor: not-allowed;
 }
@@ -181,4 +284,28 @@ button:focus {
   font-size: 1.1rem;
   color: #2e7d32;
   margin-top: 1rem;
+}
+
+@keyframes celebrate {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+#answer.correct {
+  animation: celebrate 0.5s ease-in-out;
+}
+
+@keyframes confetti {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background: #ffeb3b;
+  top: -10px;
+  animation: confetti 2s ease-in-out forwards;
 }
