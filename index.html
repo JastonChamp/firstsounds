@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>Phonemic Awareness Spinner</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phonemic Spinner</title>
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
 </head>
@@ -13,62 +13,55 @@
       <img src="images/mascot.png" alt="Mascot" class="mascot">
       <h1>Phonemic Spinner</h1>
     </div>
-
-    <div id="letter-buttons" class="letter-grid">
-      <button class="letter-btn" data-letter="all" tabindex="0">All</button>
-      <button class="letter-btn" data-letter="a" tabindex="0">A</button>
-      <button class="letter-btn" data-letter="b" tabindex="0">B</button>
-      <button class="letter-btn" data-letter="c" tabindex="0">C</button>
-      <button class="letter-btn" data-letter="d" tabindex="0">D</button>
-      <button class="letter-btn" data-letter="e" tabindex="0">E</button>
-      <button class="letter-btn" data-letter="f" tabindex="0">F</button>
-      <button class="letter-btn" data-letter="g" tabindex="0">G</button>
-      <button class="letter-btn" data-letter="h" tabindex="0">H</button>
-      <button class="letter-btn" data-letter="i" tabindex="0">I</button>
-      <button class="letter-btn" data-letter="j" tabindex="0">J</button>
-      <button class="letter-btn" data-letter="k" tabindex="0">K</button>
-      <button class="letter-btn" data-letter="l" tabindex="0">L</button>
-      <button class="letter-btn" data-letter="m" tabindex="0">M</button>
-      <button class="letter-btn" data-letter="n" tabindex="0">N</button>
-      <button class="letter-btn" data-letter="o" tabindex="0">O</button>
-      <button class="letter-btn" data-letter="p" tabindex="0">P</button>
-      <button class="letter-btn" data-letter="q" tabindex="0">Q</button>
-      <button class="letter-btn" data-letter="r" tabindex="0">R</button>
-      <button class="letter-btn" data-letter="s" tabindex="0">S</button>
-      <button class="letter-btn" data-letter="t" tabindex="0">T</button>
-      <button class="letter-btn" data-letter="u" tabindex="0">U</button>
-      <button class="letter-btn" data-letter="v" tabindex="0">V</button>
-      <button class="letter-btn" data-letter="w" tabindex="0">W</button>
-      <button class="letter-btn" data-letter="x" tabindex="0">X</button>
-      <button class="letter-btn" data-letter="y" tabindex="0">Y</button>
-      <button class="letter-btn" data-letter="z" tabindex="0">Z</button>
+    <div class="letter-grid">
+      <button class="letter-btn selected" data-letter="all" tabindex="0">All</button>
+      <button class="letter-btn" data-letter="A" tabindex="0">A</button>
+      <button class="letter-btn" data-letter="B" tabindex="0">B</button>
+      <button class="letter-btn" data-letter="C" tabindex="0">C</button>
+      <button class="letter-btn" data-letter="D" tabindex="0">D</button>
+      <button class="letter-btn" data-letter="E" tabindex="0">E</button>
+      <button class="letter-btn" data-letter="F" tabindex="0">F</button>
+      <button class="letter-btn" data-letter="G" tabindex="0">G</button>
+      <button class="letter-btn" data-letter="H" tabindex="0">H</button>
+      <button class="letter-btn" data-letter="I" tabindex="0">I</button>
+      <button class="letter-btn" data-letter="J" tabindex="0">J</button>
+      <button class="letter-btn" data-letter="K" tabindex="0">K</button>
+      <button class="letter-btn" data-letter="L" tabindex="0">L</button>
+      <button class="letter-btn" data-letter="M" tabindex="0">M</button>
+      <button class="letter-btn" data-letter="N" tabindex="0">N</button>
+      <button class="letter-btn" data-letter="O" tabindex="0">O</button>
+      <button class="letter-btn" data-letter="P" tabindex="0">P</button>
+      <button class="letter-btn" data-letter="Q" tabindex="0">Q</button>
+      <button class="letter-btn" data-letter="R" tabindex="0">R</button>
+      <button class="letter-btn" data-letter="S" tabindex="0">S</button>
+      <button class="letter-btn" data-letter="T" tabindex="0">T</button>
+      <button class="letter-btn" data-letter="U" tabindex="0">U</button>
+      <button class="letter-btn" data-letter="V" tabindex="0">V</button>
+      <button class="letter-btn" data-letter="W" tabindex="0">W</button>
+      <button class="letter-btn" data-letter="Y" tabindex="0">Y</button>
+      <button class="letter-btn" data-letter="Z" tabindex="0">Z</button>
     </div>
-
     <div class="word-display">
       <p id="current-word"></p>
     </div>
-
-    <div id="image-container" class="image-frame">
+    <div class="image-frame" id="image-container">
       <img id="word-image" src="images/placeholder.png" alt="Press Spin">
+      <img id="frame-overlay" src="images/frame-bg.png" alt="Frame Overlay">
     </div>
-
-    <p id="question">Press “Spin” to start!</p>
-
+    <p id="question">Press "Spin" to start!</p>
     <div class="controls">
       <button id="spin-button" tabindex="0">
         <span class="icon">↻</span> Spin
       </button>
       <button id="play-sound-button" tabindex="0">
-        <span class="icon">🔊</span> Play Sound
+        <span class="icon">▶</span> Play Sound
       </button>
       <button id="read-question-button" tabindex="0">
-        <span class="icon">💬</span> Read Question
+        <span class="icon">📢</span> Read Question
       </button>
     </div>
-
     <p id="answer"></p>
   </div>
-
   <script src="script.js"></script>
 </body>
 </html>
