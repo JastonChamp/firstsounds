@@ -47,7 +47,7 @@ let selectedLetter = 'all';
 let correctCount = 0;
 let starCount = 0;
 let completedWords = new Set();
-let unlockedGroups = [1]; // Start with group 1 unlocked
+let unlockedGroups = [1, 2, 3, 4, 5]; // All groups unlocked
 
 // 3. Helpers
 function toFilename(word) {
@@ -101,12 +101,12 @@ startButton.addEventListener('click', () => {
 tabButtons.forEach(btn => {
   btn.addEventListener('click', () => {
     const group = parseInt(btn.dataset.group);
-    if (!unlockedGroups.includes(group)) return; // Only allow unlocked groups
+    if (!unlockedGroups.includes(group)) return;
     tabButtons.forEach(b => b.classList.remove('selected'));
     letterGrids.forEach(grid => grid.classList.remove('active'));
     btn.classList.add('selected');
     document.getElementById(`group-${group}`).classList.add('active');
-    selectedLetter = 'all'; // Reset to 'all' when switching groups
+    selectedLetter = 'all';
     letterButtons.forEach(b => b.classList.remove('selected'));
     document.querySelector('.letter-btn[data-letter="all"]').classList.add('selected');
   });
@@ -127,7 +127,6 @@ letterButtons.forEach(btn => {
 spinBtn.addEventListener('click', () => {
   ansEl.textContent = '';
   imgEl.classList.add('spinning');
-
   const pool = getPool();
   if (!pool.length) {
     qEl.textContent = `No words for “${selectedLetter.toUpperCase()}”`;
@@ -136,13 +135,11 @@ spinBtn.addEventListener('click', () => {
     imgEl.onerror = null;
     return;
   }
-
   currentWord = pool[Math.floor(Math.random() * pool.length)];
   const baseName = toFilename(currentWord);
   const letter = currentWord[0].toLowerCase();
   const webpSrc = `images/${letter}_${baseName}.webp`;
   const pngSrc = `images/${letter}_${baseName}.png`;
-
   imgEl.onerror = null;
   imgEl.onload = () => {
     console.log(`Successfully loaded image: ${imgEl.src}`);
@@ -164,7 +161,6 @@ spinBtn.addEventListener('click', () => {
     };
     imgEl.src = pngSrc;
   };
-
   console.log(`Attempting to load image for "${currentWord}": ${webpSrc}`);
   imgEl.src = webpSrc;
   imgEl.alt = currentWord;
@@ -178,7 +174,6 @@ playBtn.addEventListener('click', () => {
     ansEl.textContent = '▶ Spin to hear a sound!';
     return;
   }
-
   const letter = currentWord[0].toLowerCase();
   const audio = new Audio(`audio/${letter}.mp3`);
   audio.onerror = () => {
@@ -187,24 +182,10 @@ playBtn.addEventListener('click', () => {
   audio.play();
   ansEl.textContent = `▶ The first sound is /${letter}/. Great job!`;
   ansEl.classList.add('correct');
-
   correctCount++;
   starCount++;
   starCountEl.textContent = starCount;
   completedWords.add(currentWord);
-
-  // Check if all words for the letter are completed
-  const letterWords = spinnerItems[letter.toUpperCase()];
-  const allCompleted = letterWords.every(word => completedWords.has(word));
-  if (allCompleted) {
-    const currentGroup = parseInt(document.querySelector('.tab-btn.selected').dataset.group);
-    const nextGroup = currentGroup + 1;
-    if (nextGroup <= 5 && !unlockedGroups.includes(nextGroup)) {
-      unlockedGroups.push(nextGroup);
-      alert(`🎉 Great job! You've unlocked Group ${nextGroup}!`);
-    }
-  }
-
   if (correctCount === 3) {
     ansEl.textContent += " 🎉 Yay! You got 3 in a row!";
     addConfetti();
