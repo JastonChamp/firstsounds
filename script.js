@@ -47,9 +47,68 @@ let selectedLetter = 'all';
 let correctCount = 0;
 let starCount = 0;
 let completedWords = new Set();
-let unlockedGroups = [1, 2, 3, 4, 5]; // All groups unlocked
+let unlockedGroups = [1, 2, 3, 4, 5]; // All groups unlocked from the start
 
-// 3. Helpers
+// 3. Voice selection for text-to-speech
+let selectedVoice = null;
+
+function selectVoice() {
+  const voices = speechSynthesis.getVoices();
+  
+  // Indicators for female voices
+  const femaleIndicators = ["female", "woman", "girl", "emma", "susan", "libby", "hazel", "zia", "eva", "samantha"];
+  
+  // Helper to identify female voices
+  const isFemaleVoice = (voice) => 
+    femaleIndicators.some(indicator => voice.name.toLowerCase().includes(indicator));
+  
+  // Priority 1: UK female voice (en-GB)
+  const enGBFemaleVoices = voices.filter(voice => voice.lang === 'en-GB' && isFemaleVoice(voice));
+  if (enGBFemaleVoices.length > 0) {
+    selectedVoice = enGBFemaleVoices[0];
+    console.log(`Selected voice: ${selectedVoice.name}`);
+    return;
+  }
+  
+  // Priority 2: Any UK voice (en-GB)
+  const enGBVoices = voices.filter(voice => voice.lang === 'en-GB');
+  if (enGBVoices.length > 0) {
+    selectedVoice = enGBVoices[0];
+    console.log(`Selected voice: ${selectedVoice.name}`);
+    return;
+  }
+  
+  // Priority 3: US female voice (en-US)
+  const enUSFemaleVoices = voices.filter(voice => voice.lang === 'en-US' && isFemaleVoice(voice));
+  if (enUSFemaleVoices.length > 0) {
+    selectedVoice = enUSFemaleVoices[0];
+    console.log(`Selected voice: ${selectedVoice.name}`);
+    return;
+  }
+  
+  // Priority 4: Any US voice (en-US)
+  const enUSVoices = voices.filter(voice => voice.lang === 'en-US');
+  if (enUSVoices.length > 0) {
+    selectedVoice = enUSVoices[0];
+    console.log(`Selected voice: ${selectedVoice.name}`);
+    return;
+  }
+  
+  // Priority 5: Any available voice
+  if (voices.length > 0) {
+    selectedVoice = voices[0];
+    console.log(`Selected voice: ${selectedVoice.name}`);
+  }
+}
+
+// Handle voice loading
+if (speechSynthesis.onvoiceschanged !== undefined) {
+  speechSynthesis.onvoiceschanged = selectVoice;
+} else {
+  selectVoice(); // For browsers with immediate voice availability
+}
+
+// 4. Helper functions
 function toFilename(word) {
   return word
     .toLowerCase()
@@ -87,7 +146,7 @@ function addConfetti() {
   }
 }
 
-// 4. Onboarding
+// 5. Onboarding
 if (!localStorage.getItem('onboardingSeen')) {
   onboardingModal.style.display = 'flex';
 }
@@ -97,7 +156,7 @@ startButton.addEventListener('click', () => {
   localStorage.setItem('onboardingSeen', 'true');
 });
 
-// 5. Letter group tabs
+// 6. Letter group tabs
 tabButtons.forEach(btn => {
   btn.addEventListener('click', () => {
     const group = parseInt(btn.dataset.group);
@@ -112,7 +171,7 @@ tabButtons.forEach(btn => {
   });
 });
 
-// 6. Letter selection logic
+// 7. Letter selection
 letterButtons.forEach(btn => {
   btn.addEventListener('click', () => {
     selectedLetter = btn.dataset.letter;
@@ -123,7 +182,7 @@ letterButtons.forEach(btn => {
   });
 });
 
-// 7. Spin logic
+// 8. Spin logic
 spinBtn.addEventListener('click', () => {
   ansEl.textContent = '';
   imgEl.classList.add('spinning');
@@ -142,31 +201,26 @@ spinBtn.addEventListener('click', () => {
   const pngSrc = `images/${letter}_${baseName}.png`;
   imgEl.onerror = null;
   imgEl.onload = () => {
-    console.log(`Successfully loaded image: ${imgEl.src}`);
     qEl.textContent = `What is the first sound of “${currentWord}”?`;
     currentWordEl.textContent = currentWord;
   };
   imgEl.onerror = () => {
-    console.log(`Failed to load WebP: ${webpSrc}, trying PNG: ${pngSrc}`);
     imgEl.onerror = () => {
-      console.log(`Failed to load PNG: ${pngSrc}, reverting to placeholder`);
       imgEl.src = 'images/placeholder.png';
       qEl.textContent = 'Oops! Image not found. Try spinning again!';
       currentWordEl.textContent = '';
     };
     imgEl.onload = () => {
-      console.log(`Successfully loaded PNG: ${pngSrc}`);
       qEl.textContent = `What is the first sound of “${currentWord}”?`;
       currentWordEl.textContent = currentWord;
     };
     imgEl.src = pngSrc;
   };
-  console.log(`Attempting to load image for "${currentWord}": ${webpSrc}`);
   imgEl.src = webpSrc;
   imgEl.alt = currentWord;
 });
 
-// 8. Play-sound logic
+// 9. Play-sound logic
 playBtn.addEventListener('click', () => {
   if (!currentWord) {
     const audio = new Audio('audio/instruction.mp3');
@@ -193,13 +247,16 @@ playBtn.addEventListener('click', () => {
   }
 });
 
-// 9. Text-to-speech for questions
+// 10. Text-to-speech
 readQuestionBtn.addEventListener('click', () => {
   if (qEl.textContent) {
     const utterance = new SpeechSynthesisUtterance(qEl.textContent);
+    if (selectedVoice) {
+      utterance.voice = selectedVoice;
+    }
     window.speechSynthesis.speak(utterance);
   }
 });
 
-// 10. Preload assets on load
+// 11. Preload assets
 window.addEventListener('load', preloadAssets);
