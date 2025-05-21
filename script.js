@@ -1,4 +1,4 @@
-// 1. Spinner items per letter (updated to match uploaded files)
+// 1. Spinner items per letter
 const spinnerItems = {
   A: ["alligator", "amulet", "anchor", "ant", "apple", "arrow", "astronaut", "ax"],
   B: ["bag", "bat", "bed", "bell", "bird", "book", "box", "bread", "bug", "bus"],
@@ -36,10 +36,18 @@ const qEl = document.getElementById('question');
 const ansEl = document.getElementById('answer');
 const currentWordEl = document.getElementById('current-word');
 const letterButtons = document.querySelectorAll('.letter-btn');
+const tabButtons = document.querySelectorAll('.tab-btn');
+const letterGrids = document.querySelectorAll('.letter-grid');
+const starCountEl = document.getElementById('star-count');
+const onboardingModal = document.getElementById('onboarding');
+const startButton = document.getElementById('start-button');
 
 let currentWord = '';
 let selectedLetter = 'all';
 let correctCount = 0;
+let starCount = 0;
+let completedWords = new Set();
+let unlockedGroups = [1]; // Start with group 1 unlocked
 
 // 3. Helpers
 function toFilename(word) {
@@ -67,7 +75,44 @@ function preloadAssets() {
   });
 }
 
-// 4. Letter selection logic
+function addConfetti() {
+  for (let i = 0; i < 20; i++) {
+    const confetti = document.createElement('div');
+    confetti.className = 'confetti';
+    confetti.style.left = `${Math.random() * 100}vw`;
+    confetti.style.background = ['#ffeb3b', '#ff6f61', '#4a90e2'][Math.floor(Math.random() * 3)];
+    confetti.style.animationDelay = `${Math.random() * 1}s`;
+    document.body.appendChild(confetti);
+    setTimeout(() => confetti.remove(), 2000);
+  }
+}
+
+// 4. Onboarding
+if (!localStorage.getItem('onboardingSeen')) {
+  onboardingModal.style.display = 'flex';
+}
+
+startButton.addEventListener('click', () => {
+  onboardingModal.style.display = 'none';
+  localStorage.setItem('onboardingSeen', 'true');
+});
+
+// 5. Letter group tabs
+tabButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const group = parseInt(btn.dataset.group);
+    if (!unlockedGroups.includes(group)) return; // Only allow unlocked groups
+    tabButtons.forEach(b => b.classList.remove('selected'));
+    letterGrids.forEach(grid => grid.classList.remove('active'));
+    btn.classList.add('selected');
+    document.getElementById(`group-${group}`).classList.add('active');
+    selectedLetter = 'all'; // Reset to 'all' when switching groups
+    letterButtons.forEach(b => b.classList.remove('selected'));
+    document.querySelector('.letter-btn[data-letter="all"]').classList.add('selected');
+  });
+});
+
+// 6. Letter selection logic
 letterButtons.forEach(btn => {
   btn.addEventListener('click', () => {
     selectedLetter = btn.dataset.letter;
@@ -78,7 +123,7 @@ letterButtons.forEach(btn => {
   });
 });
 
-// 5. Spin logic
+// 7. Spin logic
 spinBtn.addEventListener('click', () => {
   ansEl.textContent = '';
   imgEl.classList.add('spinning');
@@ -125,7 +170,7 @@ spinBtn.addEventListener('click', () => {
   imgEl.alt = currentWord;
 });
 
-// 6. Play-sound logic
+// 8. Play-sound logic
 playBtn.addEventListener('click', () => {
   if (!currentWord) {
     const audio = new Audio('audio/instruction.mp3');
@@ -141,15 +186,33 @@ playBtn.addEventListener('click', () => {
   };
   audio.play();
   ansEl.textContent = `▶ The first sound is /${letter}/. Great job!`;
+  ansEl.classList.add('correct');
 
   correctCount++;
+  starCount++;
+  starCountEl.textContent = starCount;
+  completedWords.add(currentWord);
+
+  // Check if all words for the letter are completed
+  const letterWords = spinnerItems[letter.toUpperCase()];
+  const allCompleted = letterWords.every(word => completedWords.has(word));
+  if (allCompleted) {
+    const currentGroup = parseInt(document.querySelector('.tab-btn.selected').dataset.group);
+    const nextGroup = currentGroup + 1;
+    if (nextGroup <= 5 && !unlockedGroups.includes(nextGroup)) {
+      unlockedGroups.push(nextGroup);
+      alert(`🎉 Great job! You've unlocked Group ${nextGroup}!`);
+    }
+  }
+
   if (correctCount === 3) {
     ansEl.textContent += " 🎉 Yay! You got 3 in a row!";
+    addConfetti();
     correctCount = 0;
   }
 });
 
-// 7. Text-to-speech for questions
+// 9. Text-to-speech for questions
 readQuestionBtn.addEventListener('click', () => {
   if (qEl.textContent) {
     const utterance = new SpeechSynthesisUtterance(qEl.textContent);
@@ -157,5 +220,5 @@ readQuestionBtn.addEventListener('click', () => {
   }
 });
 
-// 8. Preload assets on load
+// 10. Preload assets on load
 window.addEventListener('load', preloadAssets);
