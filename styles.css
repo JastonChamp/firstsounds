@@ -91,27 +91,39 @@ h1 {
 .image-frame {
   height: 220px;
   margin-bottom: 1.5rem;
-  background: url('images/frame-bg.png') no-repeat center center;
-  background-size: contain;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative; /* For debugging alignment if needed */
+  position: relative; /* Allows absolute positioning of children */
 }
 
 #image-container img {
-  max-height: 75%; /* Reduced from 90% to fit within the frame's transparent center (75% of 220px = 165px) */
-  max-width: 75%;  /* Reduced from 90% to fit within the frame's transparent center */
+  max-height: 75%; /* 165px, fits within the frame's transparent center */
+  max-width: 75%;
+  position: absolute; /* Position both images absolutely to stack them */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the images */
+}
+
+#word-image {
+  z-index: 1; /* Word image behind the frame */
+}
+
+#frame-overlay {
+  z-index: 2; /* Frame overlay on top */
+  width: 220px; /* Match the container size */
+  height: 220px;
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% { transform: translate(-50%, -50%) rotate(0deg); } /* Adjusted for absolute positioning */
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 @keyframes bounce {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.05); }
 }
 
 .spinning {
