@@ -16,7 +16,7 @@ const spinnerItems = {
   N: ["nose", "nest", "net", "nail", "nap", "nine", "note", "needle"],
   O: ["octopus", "ostrich", "olive", "ox", "onion"],
   P: ["pig", "pen", "pan", "pizza", "pencil", "peach", "panda", "pumpkin"],
-  Q: ["queen", "quilt", "quial", "quick", "queue", "quiet"],
+  Q: ["queen", "quilt", "quail", "quick", "queue", "quiet"],
   R: ["rabbit", "robot", "rainbow", "ring", "rose", "ruler", "rocket", "raft"],
   S: ["sun", "sock", "sandwich", "star", "seal", "soap", "snowman"],
   T: ["tiger", "tap", "top", "tooth", "tent", "tomato", "train", "tree"],
@@ -41,13 +41,32 @@ const letterGrids = document.querySelectorAll('.letter-grid');
 const starCountEl = document.getElementById('star-count');
 const onboardingModal = document.getElementById('onboarding');
 const startButton = document.getElementById('start-button');
-
+const themeToggle = document.getElementById('theme-toggle');
 let currentWord = '';
 let selectedLetter = 'all';
 let correctCount = 0;
 let starCount = 0;
 let completedWords = new Set();
 let unlockedGroups = [1, 2, 3, 4, 5]; // All groups unlocked from the start
+
+function applyTheme(dark) {
+  if (dark) {
+    document.body.classList.add('dark-mode');
+    themeToggle.textContent = '☀️';
+  } else {
+    document.body.classList.remove('dark-mode');
+    themeToggle.textContent = '🌙';
+  }
+}
+
+// Initialize theme from localStorage
+applyTheme(localStorage.getItem('theme') === 'dark');
+
+themeToggle.addEventListener('click', () => {
+  const isDark = !document.body.classList.contains('dark-mode');
+  applyTheme(isDark);
+  localStorage.setItem('theme', isDark ? 'dark' : 'light');
+});
 
 // 3. Voice selection for text-to-speech
 let selectedVoice = null;
