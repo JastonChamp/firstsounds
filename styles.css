@@ -350,3 +350,9 @@ button:focus {
   top: -10px;
   animation: confetti 2s ease-in-out forwards;
 }
+
+@media (min-width: 600px) {
+  .spinner-container {
+    max-width: 600px;
+  }
+}
