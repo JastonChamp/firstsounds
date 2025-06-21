@@ -12,7 +12,7 @@
     <div class="modal-content">
       <img src="images/mascot.png" alt="Mascot" class="modal-mascot">
       <p>Hi! I’m Mango Samurice! Let’s learn sounds together. Click a letter, then press Spin to start!</p>
-      <button id="start-button">Let’s Go!</button>
+    <button id="start-button" type="button" aria-label="Start game">Let’s Go!</button>
     </div>
   </div>
   <div class="spinner-container">
@@ -22,6 +22,7 @@
       <div class="star-counter">
         <span id="star-count">0</span> ⭐
       </div>
+        <button id="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
     </div>
     <div class="letter-group-tabs">
       <button class="tab-btn selected" data-group="1">A-E</button>
@@ -75,13 +76,13 @@
     </div>
     <p id="question">Press Spin to start!</p>
     <div class="controls">
-      <button id="spin-button" title="Spin">
+       <button id="spin-button" type="button" title="Spin" aria-label="Spin">
         <span class="icon">↻</span>
       </button>
-      <button id="play-sound-button" title="Play Sound">
+      <button id="play-sound-button" type="button" title="Play Sound" aria-label="Play sound">
         <span class="icon">▶</span>
       </button>
-      <button id="read-question-button" title="Read Question">
+      <button id="read-question-button" type="button" title="Read Question" aria-label="Read question">
         <span class="icon">📢</span>
       </button>
     </div>
