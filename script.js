@@ -121,11 +121,8 @@ function selectVoice() {
 }
 
 // Handle voice loading
-if (speechSynthesis.onvoiceschanged !== undefined) {
-  speechSynthesis.onvoiceschanged = selectVoice;
-} else {
-  selectVoice(); // For browsers with immediate voice availability
-}
+speechSynthesis.addEventListener('voiceschanged', selectVoice);
+selectVoice(); // For browsers where voices are already available
 
 // 4. Helper functions
 function toFilename(word) {
