@@ -1,149 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Phonemic Spinner</title>
-  <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue&display=swap" rel="stylesheet" />
+
 </head>
 <body>
-  <div class="onboarding-modal" id="onboarding">
+  <!-- On-boarding modal -->
+  <div class="onboarding-modal" id="onboarding" role="dialog" aria-labelledby="onboard-heading">
     <div class="modal-content">
-      <img src="images/mascot.png" alt="Mascot" class="modal-mascot">
-      <p>Hi! I’m Mango Samurice! Let’s learn sounds together. Click a letter, then press Spin to start!</p>
-      <button id="start-button" type="button" aria-label="Start game">Let’s Go!</button>
+      <img src="images/mascot.png" alt="Mango Samurice mascot smiling and waving" class="modal-mascot" />
+      <p id="onboard-heading">Hi! I’m Mango Samurice! Click a letter, then press Spin to start.</p>
+      <button id="start-button" type="button">Let’s Go!</button>
     </div>
   </div>
-  <div class="spinner-container">
-    <div class="welcome-message">
-      <img src="images/mascot.png" alt="Mascot" class="mascot">
+
+  <!-- Main app -->
+  <main class="spinner-container" aria-live="polite">
+    <!-- Header -->
+    <header class="welcome-message">
+      <img src="images/mascot.png" alt="" class="mascot" aria-hidden="true" />
       <h1>Phonemic Spinner</h1>
-      <div class="star-counter">
-        <span id="star-count">0</span> ⭐
-      </div>
-      <button id="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
-      </div>
-    <div class="letter-group-tabs">
-      <button class="tab-btn selected" data-group="1">A-E</button>
-      <button class="tab-btn" data-group="2">F-J</button>
-      <button class="tab-btn" data-group="3">K-O</button>
-      <button class="tab-btn" data-group="4">P-T</button>
-      <button class="tab-btn" data-group="5">U-Z</button>
-    </div>
-    <div class="letter-grid active" id="group-1">
+      <div class="star-counter" aria-label="Stars collected"><span id="star-count">0</span> ⭐</div>
+      <button id="theme-toggle" type="button" aria-label="Toggle dark / light mode">🌙</button>
+    </header>
+
+    <!-- Letter-set tabs -->
+    <nav class="letter-group-tabs" role="tablist">
+      <button class="tab-btn selected" role="tab" aria-controls="group-1" aria-selected="true">A–E</button>
+      <button class="tab-btn" role="tab" aria-controls="group-2">F–J</button>
+      <button class="tab-btn" role="tab" aria-controls="group-3">K–O</button>
+      <button class="tab-btn" role="tab" aria-controls="group-4">P–T</button>
+      <button class="tab-btn" role="tab" aria-controls="group-5">U–Z</button>
+    </nav>
+
+    <!-- Letter grids (only one shown at a time via JS) -->
+    <section id="group-1" class="letter-grid active" role="tabpanel">
       <button class="letter-btn selected" data-letter="all">All</button>
       <button class="letter-btn" data-letter="A">A</button>
       <button class="letter-btn" data-letter="B">B</button>
       <button class="letter-btn" data-letter="C">C</button>
       <button class="letter-btn" data-letter="D">D</button>
       <button class="letter-btn" data-letter="E">E</button>
-    </div>
-    <div class="letter-grid" id="group-2">
+    </section>
+
+    <section id="group-2" class="letter-grid" role="tabpanel" hidden>
       <button class="letter-btn" data-letter="F">F</button>
       <button class="letter-btn" data-letter="G">G</button>
       <button class="letter-btn" data-letter="H">H</button>
       <button class="letter-btn" data-letter="I">I</button>
       <button class="letter-btn" data-letter="J">J</button>
-    </div>
-    <div class="letter-grid" id="group-3">
+    </section>
+
+    <section id="group-3" class="letter-grid" role="tabpanel" hidden>
       <button class="letter-btn" data-letter="K">K</button>
       <button class="letter-btn" data-letter="L">L</button>
       <button class="letter-btn" data-letter="M">M</button>
       <button class="letter-btn" data-letter="N">N</button>
       <button class="letter-btn" data-letter="O">O</button>
-    </div>
-    <div class="letter-grid" id="group-4">
-      <button class="letter-btn" data-letter="P">P</button>
-      <button class="letter-btn" data-letter="Q">Q</button>
-      <button class="letter-btn" data-letter="R">R</button>
-      <button class="letter-btn" data-letter="S">S</button>
-      <button class="letter-btn" data-letter="T">T</button>
-    </div>
-    <div class="letter-grid" id="group-5">
-      <button class="letter-btn" data-letter="U">U</button>
-      <button class="letter-btn" data-letter="V">V</button>
-      <button class="letter-btn" data-letter="W">W</button>
-      <button class="letter-btn" data-letter="Y">Y</button>
-      <button class="letter-btn" data-letter="Z">Z</button>
-    </div>
-    <div class="word-display">
-      <p id="current-word"></p>
-    </div>
-    <div class="image-frame" id="image-container">
-      <img id="word-image" src="images/placeholder.png" alt="Press Spin">
-      <img id="frame-overlay" src="images/frame-bg.png" alt="Frame Overlay">
-    </div>
-    <p id="question">Press Spin to start!</p>
-    <div class="controls">
-    <div class="letter-grid" id="group-3">
-      <button class="letter-btn" data-letter="K">K</button>
-<button class="letter-btn" data-letter="L">L</button>
-      <button class="letter-btn" data-letter="M">M</button>
-      <button class="letter-btn" data-letter="N">N</button>
-      <button class="letter-btn" data-letter="O">O</button>
-    </div>
-    <div class="letter-grid" id="group-4">
-      <button class="letter-btn" data-letter="P">P</button>
-      <button class="letter-btn" data-letter="Q">Q</button>
-      <button class="letter-btn" data-letter="R">R</button>
-      <button class="letter-btn" data-letter="S">S</button>
-      <button class="letter-btn" data-letter="T">T</button>
-    </div>
-    <div class="letter-grid" id="group-5">
-      <button class="letter-btn" data-letter="U">U</button>
-      <button class="letter-btn" data-letter="V">V</button>
-      <button class="letter-btn" data-letter="W">W</button>
-      <button class="letter-btn" data-letter="Y">Y</button>
-      <button class="letter-btn" data-letter="Z">Z</button>
-    </div>
-    <div class="word-display">
-      <p id="current-word"></p>
-    </div>
-    <div class="image-frame" id="image-container">
-      <img id="word-image" src="images/placeholder.png" alt="Press Spin">
-      <img id="frame-overlay" src="images/frame-bg.png" alt="Frame Overlay">
-    </div>
-    <p id="question">Press Spin to start!</p>
-    <div class="controls">
+    </section>
 
-      <button class="letter-btn" data-letter="O">O</button>
-    </div>
-    <div class="letter-grid" id="group-4">
+    <section id="group-4" class="letter-grid" role="tabpanel" hidden>
       <button class="letter-btn" data-letter="P">P</button>
       <button class="letter-btn" data-letter="Q">Q</button>
       <button class="letter-btn" data-letter="R">R</button>
       <button class="letter-btn" data-letter="S">S</button>
       <button class="letter-btn" data-letter="T">T</button>
-    </div>
-    <div class="letter-grid" id="group-5">
+    </section>
+
+    <section id="group-5" class="letter-grid" role="tabpanel" hidden>
       <button class="letter-btn" data-letter="U">U</button>
       <button class="letter-btn" data-letter="V">V</button>
       <button class="letter-btn" data-letter="W">W</button>
+      <button class="letter-btn" data-letter="X">X</button>
       <button class="letter-btn" data-letter="Y">Y</button>
       <button class="letter-btn" data-letter="Z">Z</button>
-    </div>
-    <div class="word-display">
-      <p id="current-word"></p>
-    </div>
-    <div class="image-frame" id="image-container">
-      <img id="word-image" src="images/placeholder.png" alt="Press Spin">
-      <img id="frame-overlay" src="images/frame-bg.png" alt="Frame Overlay">
-    </div>
+    </section>
+
+    <!-- Current word + image -->
+    <div class="word-display"><p id="current-word"></p></div>
+
+    <figure class="image-frame" id="image-container">
+      <img id="word-image" src="images/placeholder.png" alt="Placeholder silhouette; press Spin" />
+      <img id="frame-overlay" src="images/frame-bg.png" alt="" aria-hidden="true" />
+    </figure>
+
+    <!-- Prompt text -->
     <p id="question">Press Spin to start!</p>
+
+    <!-- Controls -->
     <div class="controls">
-      <button id="spin-button" type="button" title="Spin" aria-label="Spin">
-        <span class="icon">↻</span>
-      </button>
-      <button id="play-sound-button" type="button" title="Play Sound" aria-label="Play sound">
-        <span class="icon">▶</span>
-      </button>
-      <button id="read-question-button" type="button" title="Read Question" aria-label="Read question">
-        <span class="icon">📢</span>
-      </button>
+      <button id="spin-button" type="button" aria-label="Spin for a new word"><span class="icon">↻</span></button>
+      <button id="play-sound-button" type="button" aria-label="Play word sound"><span class="icon">▶</span></button>
+      <button id="read-question-button" type="button" aria-label="Read the question aloud"><span class="icon">📢</span></button>
     </div>
-    <p id="answer"></p>
-  </div>
-  <script src="script.js"></script>
+
+    <p id="answer" aria-live="polite"></p>
+  </main>
+
+  <!-- Script -->
+  <script src="script.js" defer></script>
 </body>
 </html>
