@@ -294,7 +294,7 @@ body.dark-mode .letter-btn {
   gap: 0.8rem;
 }
 
-button {
+button:not(.letter-btn) {
   font-family: 'Comic Neue', sans-serif;
   font-size: 0;
   padding: 0.8rem;
