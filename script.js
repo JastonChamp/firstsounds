@@ -32,6 +32,11 @@ const spinBtn = document.getElementById('spin-button');
 const playBtn = document.getElementById('play-sound-button');
 const readQuestionBtn = document.getElementById('read-question-button');
 const imgEl = document.getElementById('word-image');
+imgEl.addEventListener('animationend', (e) => {
+  if (e.animationName === 'bounce') {
+    imgEl.classList.remove('spinning');
+  }
+});
 const qEl = document.getElementById('question');
 const ansEl = document.getElementById('answer');
 const currentWordEl = document.getElementById('current-word');
