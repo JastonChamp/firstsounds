@@ -27,6 +27,14 @@ const spinnerItems = {
   Z: ["zebra", "zoo", "zip", "zero", "zap", "zigzag"]
 };
 
+const letterGroups = {
+  1: ['A', 'B', 'C', 'D', 'E'],
+  2: ['F', 'G', 'H', 'I', 'J'],
+  3: ['K', 'L', 'M', 'N', 'O'],
+  4: ['P', 'Q', 'R', 'S', 'T'],
+  5: ['U', 'V', 'W', 'Y', 'Z']
+};
+
 // 2. Grab DOM elements
 const spinBtn = document.getElementById('spin-button');
 const playBtn = document.getElementById('play-sound-button');
