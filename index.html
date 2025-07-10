@@ -20,6 +20,16 @@
     </div>
   </div>
 
+   <!-- Settings modal -->
+  <div class="settings-modal" id="settings-modal" role="dialog" aria-labelledby="settings-heading" hidden>
+    <div class="modal-content">
+      <h2 id="settings-heading">Settings</h2>
+      <label for="voice-select">Voice:</label>
+      <select id="voice-select"></select>
+      <button id="close-settings" type="button">Close</button>
+    </div>
+  </div>
+
   <!-- Main app -->
   <main class="spinner-container" aria-live="polite">
     <!-- Header -->
@@ -33,6 +43,10 @@
       </button>
     </header>
 
+    <button id="settings-button" type="button" aria-label="Voice settings">
+        <span class="emoji" aria-hidden="true">⚙️</span>
+      </button>
+    
     <!-- Letter-set tabs -->
     <nav class="letter-group-tabs" role="tablist">
       <button class="tab-btn selected" role="tab" aria-controls="group-1" data-group="1" aria-selected="true">A–E</button>
