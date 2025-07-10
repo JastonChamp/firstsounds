@@ -57,6 +57,7 @@ const startButton = document.getElementById('start-button');
 const themeToggle = document.getElementById('theme-toggle');
 let currentWord = '';
 let selectedLetter = 'all';
+let selectedGroup = 1;
 let correctCount = 0;
 let starCount = 0;
 let completedWords = new Set();
@@ -150,15 +151,23 @@ function getPool() {
   return pool.filter(word => word.length <= 5);
 }
 
-function preloadAssets() {
-  const letters = Object.keys(spinnerItems);
+function preloadAssets(target) {
+  let letters;
+  if (!target || target === 'all') {
+    letters = Object.keys(spinnerItems);
+  } else if (Array.isArray(target)) {
+    letters = target.map(l => l.toUpperCase());
+  } else {
+    letters = [String(target).toUpperCase()];
+  }
   letters.forEach(letter => {
+    if (!spinnerItems[letter]) return;
     spinnerItems[letter].forEach(word => {
       const baseName = toFilename(word);
       const letterLower = letter.toLowerCase();
       const img = new Image();
       img.src = `images/${letterLower}_${baseName}.webp`;
-      const audio = new Audio(`audio/${letterLower}.mp3`);
+     new Audio(`audio/${letter.toLowerCase()}.mp3`);
     });
   });
 }
@@ -195,8 +204,10 @@ tabButtons.forEach(btn => {
     btn.classList.add('selected');
     document.getElementById(`group-${group}`).classList.add('active');
     selectedLetter = 'all';
+    selectedGroup = group;
     letterButtons.forEach(b => b.classList.remove('selected'));
     document.querySelector('.letter-btn[data-letter="all"]').classList.add('selected');
+    preloadAssets(letterGroups[group]);
   });
 });
 
@@ -208,6 +219,11 @@ letterButtons.forEach(btn => {
     btn.classList.add('selected');
     const popSound = new Audio('audio/pop.mp3');
     popSound.play();
+     if (selectedLetter === 'all') {
+      preloadAssets(letterGroups[selectedGroup]);
+    } else {
+      preloadAssets(selectedLetter);
+    }
   });
 });
 
@@ -287,5 +303,4 @@ readQuestionBtn.addEventListener('click', () => {
   }
 });
 
-// 11. Preload assets
-window.addEventListener('load', preloadAssets);
+// 11. Preload assets (invoked on selection)
