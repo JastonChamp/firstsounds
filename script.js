@@ -153,9 +153,33 @@ function toFilename(word) {
     .replace(/^_+|_+$/g, '');
 }
 
+// Reset completed words for a specific letter when all of its words
+// have been seen. This allows the spinner to cycle again.
+function resetLetterIfDone(letter) {
+  const words = spinnerItems[letter];
+  if (!words) return;
+  if (words.every(w => completedWords.has(w))) {
+    words.forEach(w => completedWords.delete(w));
+  }
+}
 function getPool() {
-  let pool = selectedLetter === 'all' ? Object.values(spinnerItems).flat() : spinnerItems[selectedLetter.toUpperCase()] || [];
-  return pool.filter(word => word.length <= 5);
+ let pool =
+    selectedLetter === 'all'
+      ? Object.values(spinnerItems).flat()
+      : spinnerItems[selectedLetter.toUpperCase()] || [];
+  pool = pool.filter(word => word.length <= 5);
+  let filtered = pool.filter(word => !completedWords.has(word));
+
+  if (!filtered.length && pool.length) {
+    if (selectedLetter === 'all') {
+      Object.keys(spinnerItems).forEach(resetLetterIfDone);
+      filtered = pool.filter(word => !completedWords.has(word));
+    } else {
+      resetLetterIfDone(selectedLetter.toUpperCase());
+      filtered = pool;
+    }
+  }
+  return filtered;
 }
 
 function preloadAssets(target) {
@@ -292,6 +316,7 @@ playBtn.addEventListener('click', () => {
   starCount++;
   starCountEl.textContent = starCount;
   completedWords.add(currentWord);
+  resetLetterIfDone(currentWord[0].toUpperCase());
   if (correctCount === 3) {
     ansEl.textContent += " 🎉 Yay! You got 3 in a row!";
     addConfetti();
