@@ -32,6 +32,10 @@ const starCountEl = document.getElementById('star-count');
 const onboardingModal = document.getElementById('onboarding');
 const startButton = document.getElementById('start-button');
 const themeToggle = document.getElementById('theme-toggle');
+const settingsButton = document.getElementById('settings-button');
+const settingsModal = document.getElementById('settings-modal');
+const voiceSelect = document.getElementById('voice-select');
+const closeSettingsBtn = document.getElementById('close-settings');
 let currentWord = '';
 let selectedLetter = 'all';
 let selectedGroup = 1;
@@ -87,61 +91,97 @@ themeToggle.addEventListener('click', () => {
   localStorage.setItem('theme', isDark ? 'dark' : 'light');
 });
 
+// Settings modal
+if (settingsButton && settingsModal && closeSettingsBtn) {
+  settingsButton.addEventListener('click', () => {
+    settingsModal.hidden = false;
+  });
+  closeSettingsBtn.addEventListener('click', () => {
+    settingsModal.hidden = true;
+  });
+}
+
 // 3. Voice selection for text-to-speech
 let selectedVoice = null;
+function chooseDefaultVoice(voices) {
+  const femaleIndicators = [
+    'female',
+    'woman',
+    'girl',
+    'emma',
+    'susan',
+    'libby',
+    'hazel',
+    'zia',
+    'eva',
+    'samantha'
+  ];
 
-function selectVoice() {
-  const voices = speechSynthesis.getVoices();
-  
-  // Indicators for female voices
-  const femaleIndicators = ["female", "woman", "girl", "emma", "susan", "libby", "hazel", "zia", "eva", "samantha"];
-  
-  // Helper to identify female voices
-  const isFemaleVoice = (voice) => 
-    femaleIndicators.some(indicator => voice.name.toLowerCase().includes(indicator));
-  
-  // Priority 1: UK female voice (en-GB)
-  const enGBFemaleVoices = voices.filter(voice => voice.lang === 'en-GB' && isFemaleVoice(voice));
-  if (enGBFemaleVoices.length > 0) {
-    selectedVoice = enGBFemaleVoices[0];
-    console.log(`Selected voice: ${selectedVoice.name}`);
-    return;
-  }
-  
-  // Priority 2: Any UK voice (en-GB)
-  const enGBVoices = voices.filter(voice => voice.lang === 'en-GB');
-  if (enGBVoices.length > 0) {
-    selectedVoice = enGBVoices[0];
-    console.log(`Selected voice: ${selectedVoice.name}`);
-    return;
-  }
-  
-  // Priority 3: US female voice (en-US)
-  const enUSFemaleVoices = voices.filter(voice => voice.lang === 'en-US' && isFemaleVoice(voice));
-  if (enUSFemaleVoices.length > 0) {
-    selectedVoice = enUSFemaleVoices[0];
-    console.log(`Selected voice: ${selectedVoice.name}`);
-    return;
-  }
-  
-  // Priority 4: Any US voice (en-US)
-  const enUSVoices = voices.filter(voice => voice.lang === 'en-US');
-  if (enUSVoices.length > 0) {
-    selectedVoice = enUSVoices[0];
-    console.log(`Selected voice: ${selectedVoice.name}`);
-    return;
-  }
-  
-  // Priority 5: Any available voice
-  if (voices.length > 0) {
-    selectedVoice = voices[0];
-    console.log(`Selected voice: ${selectedVoice.name}`);
+  const isFemaleVoice = (voice) =>
+    femaleIndicators.some((ind) => voice.name.toLowerCase().includes(ind));
+
+  const enGBFemaleVoices = voices.filter(
+    (v) => v.lang === 'en-GB' && isFemaleVoice(v)
+  );
+  if (enGBFemaleVoices.length) return enGBFemaleVoices[0];
+
+  const enGBVoices = voices.filter((v) => v.lang === 'en-GB');
+  if (enGBVoices.length) return enGBVoices[0];
+
+  const enUSFemaleVoices = voices.filter(
+    (v) => v.lang === 'en-US' && isFemaleVoice(v)
+  );
+  if (enUSFemaleVoices.length) return enUSFemaleVoices[0];
+
+  const enUSVoices = voices.filter((v) => v.lang === 'en-US');
+  if (enUSVoices.length) return enUSVoices[0];
+
+  return voices[0] || null;
+}
+
+function populateVoiceSelect(voices) {
+  if (!voiceSelect) return;
+  voiceSelect.innerHTML = '';
+  voices.forEach((v) => {
+    const opt = document.createElement('option');
+    opt.value = v.name;
+    opt.textContent = `${v.name} (${v.lang})`;
+    voiceSelect.appendChild(opt);
+  });
+  if (selectedVoice) {
+    voiceSelect.value = selectedVoice.name;
   }
 }
 
+function loadVoices() {
+  const voices = speechSynthesis.getVoices();
+  if (!voices.length) return;
+
+  const storedName = localStorage.getItem('selectedVoiceName');
+  if (storedName) {
+    const match = voices.find((v) => v.name === storedName);
+    selectedVoice = match || chooseDefaultVoice(voices);
+  } else {
+    selectedVoice = chooseDefaultVoice(voices);
+  }
+
+  populateVoiceSelect(voices);
+}
+
+if (voiceSelect) {
+  voiceSelect.addEventListener('change', () => {
+    const voices = speechSynthesis.getVoices();
+    const match = voices.find((v) => v.name === voiceSelect.value);
+    if (match) {
+      selectedVoice = match;
+      localStorage.setItem('selectedVoiceName', match.name);
+    }
+  });
+}
+
 // Handle voice loading
-speechSynthesis.addEventListener('voiceschanged', selectVoice);
-selectVoice(); // For browsers where voices are already available
+speechSynthesis.addEventListener('voiceschanged', loadVoices);
+loadVoices();
 
 // 4. Helper functions
 function toFilename(word) {
@@ -167,7 +207,6 @@ function getPool() {
       : spinnerItems[selectedLetter.toUpperCase()] || [];
   pool = pool.filter(word => word.length <= 5);
   let filtered = pool.filter(word => !completedWords.has(word));
-
   if (!filtered.length && pool.length) {
     if (selectedLetter === 'all') {
       Object.keys(spinnerItems).forEach(resetLetterIfDone);
