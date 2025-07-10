@@ -111,14 +111,14 @@ themeToggle.addEventListener('click', () => {
 });
 
 // Settings modal
-if (settingsButton && settingsModal && closeSettingsBtn) {
-  settingsButton.addEventListener('click', () => {
-    settingsModal.hidden = false;
-  });
-  closeSettingsBtn.addEventListener('click', () => {
-    settingsModal.hidden = true;
-  });
-}
+  if (settingsButton && settingsModal && closeSettingsBtn) {
+    settingsButton.addEventListener('click', () => {
+      settingsModal.style.display = 'flex';
+    });
+    closeSettingsBtn.addEventListener('click', () => {
+      settingsModal.style.display = 'none';
+    });
+  }
 
 // 3. Voice selection for text-to-speech
 let selectedVoice = null;
