@@ -119,6 +119,13 @@ body {
   cursor: pointer;
 }
 
+#theme-toggle .emoji {
+  font-size: 1.4rem;
+}
+
+#theme-toggle .label {
+  font-size: 0.9rem;
+}
 #theme-toggle:focus {
   outline: 3px solid var(--highlight-color);
 }
