@@ -59,10 +59,21 @@ let currentWord = '';
 let selectedLetter = 'all';
 let selectedGroup = 1;
 let correctCount = 0;
-let starCount = 0;
+let starCount = parseInt(localStorage.getItem('starCount'), 10);
+if (isNaN(starCount)) starCount = 0;
 let completedWords = new Set();
-let unlockedGroups = [1, 2, 3, 4, 5]; // All groups unlocked from the start
-
+let unlockedGroups = JSON.parse(localStorage.getItem('unlockedGroups') || 'null');
+if (!Array.isArray(unlockedGroups)) {
+  unlockedGroups = [1, 2, 3, 4, 5];
+}
+// Update UI based on saved values
+starCountEl.textContent = starCount;
+tabButtons.forEach(btn => {
+  const group = parseInt(btn.dataset.group);
+  if (!unlockedGroups.includes(group)) {
+    btn.disabled = true;
+  }
+});
 function applyTheme(dark) {
   const emojiSpan = themeToggle.querySelector('.emoji');
   const labelSpan = themeToggle.querySelector('.label');
@@ -215,6 +226,12 @@ function addConfetti() {
   }
 }
 
+// Persist progress to localStorage
+function saveProgress() {
+  localStorage.setItem('starCount', String(starCount));
+  localStorage.setItem('unlockedGroups', JSON.stringify(unlockedGroups));
+}
+
 // 5. Onboarding
 if (!localStorage.getItem('onboardingSeen')) {
   onboardingModal.style.display = 'flex';
@@ -315,6 +332,7 @@ playBtn.addEventListener('click', () => {
   correctCount++;
   starCount++;
   starCountEl.textContent = starCount;
+  saveProgress();
   completedWords.add(currentWord);
   resetLetterIfDone(currentWord[0].toUpperCase());
   if (correctCount === 3) {
