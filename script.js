@@ -64,12 +64,19 @@ let completedWords = new Set();
 let unlockedGroups = [1, 2, 3, 4, 5]; // All groups unlocked from the start
 
 function applyTheme(dark) {
+  const emojiSpan = themeToggle.querySelector('.emoji');
+  const labelSpan = themeToggle.querySelector('.label');
+
   if (dark) {
     document.body.classList.add('dark-mode');
-    themeToggle.textContent = '☀️';
+   if (emojiSpan) emojiSpan.textContent = '☀️';
+    if (labelSpan) labelSpan.textContent = 'Light Mode';
+    themeToggle.setAttribute('aria-label', 'Switch to light mode');
   } else {
     document.body.classList.remove('dark-mode');
-    themeToggle.textContent = '🌙';
+    if (emojiSpan) emojiSpan.textContent = '🌙';
+    if (labelSpan) labelSpan.textContent = 'Dark Mode';
+    themeToggle.setAttribute('aria-label', 'Switch to dark mode');
   }
 }
 
