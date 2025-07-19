@@ -8,19 +8,18 @@
   <!-- Styles -->
   <link rel="stylesheet" href="styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Comic+Neue&display=swap" rel="stylesheet" />
-
 </head>
 <body>
   <!-- On-boarding modal -->
   <div class="onboarding-modal" id="onboarding" role="dialog" aria-labelledby="onboard-heading">
     <div class="modal-content">
-      <img src="images/mascot.png" alt="Mango Samurice mascot smiling and waving" class="modal-mascot" />
-      <p id="onboard-heading">Hi! I’m Mango Samurice! Click a letter, then press Spin to start.</p>
+      <img src="images/mascot.png" alt="Giri mascot smiling and waving" class="modal-mascot" />
+      <p id="onboard-heading">Hi! I’m Giri! Click a letter, then press Spin to start.</p>
       <button id="start-button" type="button">Let’s Go!</button>
     </div>
   </div>
 
-   <!-- Settings modal -->
+  <!-- Settings modal -->
   <div class="settings-modal" id="settings-modal" role="dialog" aria-labelledby="settings-heading" style="display:none">
     <div class="modal-content">
       <h2 id="settings-heading">Settings</h2>
@@ -34,18 +33,25 @@
   <main class="spinner-container" aria-live="polite">
     <!-- Header -->
     <header class="welcome-message">
+      <!-- ★ Banner Added Here ★ -->
+      <div class="banner">
+        <img src="images/banner.png" alt="Phonemic Spinner Banner with Giri mascot" />
+      </div>
+
       <img src="images/mascot.png" alt="" class="mascot" aria-hidden="true" />
       <h1>Phonemic Spinner</h1>
-      <div class="star-counter" aria-label="Stars collected"><span id="star-count">0</span> ⭐</div>
-     <button id="theme-toggle" type="button" aria-label="Switch to dark mode">
+      <div class="star-counter" aria-label="Stars collected">
+        <span id="star-count">0</span> ⭐
+      </div>
+      <button id="theme-toggle" type="button" aria-label="Switch to dark mode">
         <span class="emoji" aria-hidden="true">🌙</span>
         <span class="label">Dark Mode</span>
       </button>
     </header>
 
     <button id="settings-button" type="button" aria-label="Voice settings">
-        <span class="emoji" aria-hidden="true">⚙️</span>
-      </button>
+      <span class="emoji" aria-hidden="true">⚙️</span>
+    </button>
     
     <!-- Letter-set tabs -->
     <nav class="letter-group-tabs" role="tablist">
@@ -57,7 +63,7 @@
     </nav>
     <div class="progress-bar" id="progress-bar"></div>
 
-    <!-- Letter grids (only one shown at a time via JS) -->
+    <!-- Letter grids -->
     <section id="group-1" class="letter-grid active" role="tabpanel">
       <button class="letter-btn selected" data-letter="all">All</button>
       <button class="letter-btn" data-letter="A">A</button>
@@ -66,7 +72,6 @@
       <button class="letter-btn" data-letter="D">D</button>
       <button class="letter-btn" data-letter="E">E</button>
     </section>
-
     <section id="group-2" class="letter-grid" role="tabpanel" hidden>
       <button class="letter-btn" data-letter="F">F</button>
       <button class="letter-btn" data-letter="G">G</button>
@@ -74,7 +79,6 @@
       <button class="letter-btn" data-letter="I">I</button>
       <button class="letter-btn" data-letter="J">J</button>
     </section>
-
     <section id="group-3" class="letter-grid" role="tabpanel" hidden>
       <button class="letter-btn" data-letter="K">K</button>
       <button class="letter-btn" data-letter="L">L</button>
@@ -82,7 +86,6 @@
       <button class="letter-btn" data-letter="N">N</button>
       <button class="letter-btn" data-letter="O">O</button>
     </section>
-
     <section id="group-4" class="letter-grid" role="tabpanel" hidden>
       <button class="letter-btn" data-letter="P">P</button>
       <button class="letter-btn" data-letter="Q">Q</button>
@@ -90,7 +93,6 @@
       <button class="letter-btn" data-letter="S">S</button>
       <button class="letter-btn" data-letter="T">T</button>
     </section>
-
     <section id="group-5" class="letter-grid" role="tabpanel" hidden>
       <button class="letter-btn" data-letter="U">U</button>
       <button class="letter-btn" data-letter="V">V</button>
@@ -101,13 +103,12 @@
 
     <!-- Current word + image -->
     <div class="word-display"><p id="current-word"></p></div>
-
     <figure class="image-frame" id="image-container">
       <img id="word-image" src="images/placeholder.png" alt="Placeholder silhouette; press Spin" />
       <img id="frame-overlay" src="images/frame-bg.png" alt="" aria-hidden="true" />
     </figure>
 
-    <!-- Prompt text -->
+    <!-- Prompt -->
     <p id="question">Press Spin to start!</p>
 
     <!-- Controls -->
