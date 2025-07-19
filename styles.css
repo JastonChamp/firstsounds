@@ -30,7 +30,10 @@ body.dark-mode {
 
 body {
   font-family: 'Comic Neue', sans-serif;
-  background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+  background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%) url('images/background.png'); /* Gradient with image overlay */
+  background-size: cover; /* Covers full screen; use 'contain' if you want no cropping */
+  background-position: center; /* Centers the image */
+  background-repeat: no-repeat; /* No tiling */
   color: var(--text-color);
   display: flex;
   align-items: flex-start; /* Change from center to start for better top visibility */
