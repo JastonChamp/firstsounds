@@ -7,10 +7,10 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="styles.css" />
-<link href="https://fonts.googleapis.com/css2?family=Comic+Neue&amp;display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <!-- On-boarding modal -->
+  <!-- On‑boarding modal -->
   <div class="onboarding-modal" id="onboarding" role="dialog" aria-labelledby="onboard-heading">
     <div class="modal-content">
       <img src="images/mascot.png" alt="Giri mascot smiling and waving" class="modal-mascot" />
@@ -32,9 +32,21 @@
   <!-- Main app -->
   <main class="spinner-container" aria-live="polite">
     <!-- Header -->
-     <header class="welcome-message" role="img" aria-label="Phonemic Spinner banner with mascots holding book and sound wheel">
-      <!-- Banner is now a CSS background -->
+    <header class="welcome-message">
+      <!-- ★ Banner ★ -->
+      <div class="banner">
+        <img src="images/banner.png" alt="Phonemic Spinner Banner with Giri mascot" />
+      </div>
+
+      <!-- ★ Mascot Container ★ -->
+      <div class="mascot-container">
+        <img src="images/mascot.png" alt="Giri mascot waving" />
+      </div>
+
+      <!-- Existing mascot (decorative) -->
       <img src="images/mascot.png" alt="" class="mascot" aria-hidden="true" />
+
+      <!-- Title & Controls -->
       <h1>Phonemic Spinner</h1>
       <div class="star-counter" aria-label="Stars collected">
         <span id="star-count">0</span> ⭐
@@ -49,7 +61,7 @@
       <span class="emoji" aria-hidden="true">⚙️</span>
     </button>
     
-    <!-- Letter-set tabs -->
+    <!-- Letter‑set tabs -->
     <nav class="letter-group-tabs" role="tablist">
       <button class="tab-btn selected" role="tab" aria-controls="group-1" data-group="1" aria-selected="true">A–E</button>
       <button class="tab-btn" role="tab" aria-controls="group-2" data-group="2">F–J</button>
@@ -97,7 +109,7 @@
       <button class="letter-btn" data-letter="Z">Z</button>
     </section>
 
-    <!-- Current word + image -->
+    <!-- Current word & image -->
     <div class="word-display"><p id="current-word"></p></div>
     <figure class="image-frame" id="image-container">
       <img id="word-image" src="images/placeholder.png" alt="Placeholder silhouette; press Spin" />
