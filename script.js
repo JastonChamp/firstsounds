@@ -61,6 +61,8 @@ const settingsButton = document.getElementById('settings-button');
 const settingsModal = document.getElementById('settings-modal');
 const voiceSelect = document.getElementById('voice-select');
 const closeSettingsBtn = document.getElementById('close-settings');
+const progressBar = document.getElementById('progress-bar');
+const mascot = document.querySelector('.mascot');
 let currentWord = '';
 let selectedLetter = 'all';
 let selectedGroup = 1;
@@ -80,10 +82,15 @@ tabButtons.forEach(btn => {
     btn.disabled = true;
   }
 });
+progressBar.style.width = `${(unlockedGroups.length / 5) * 100}%`;
 
 // Spinner words are already loaded, so enable the spin button
 spinBtn.disabled = false;
 preloadAssets(letterGroups[selectedGroup]);
+
+// Mascot wave on load
+mascot.classList.add('wave');
+
 function applyTheme(dark) {
   const emojiSpan = themeToggle.querySelector('.emoji');
   const labelSpan = themeToggle.querySelector('.label');
@@ -275,6 +282,7 @@ function addConfetti() {
 function saveProgress() {
   localStorage.setItem('starCount', String(starCount));
   localStorage.setItem('unlockedGroups', JSON.stringify(unlockedGroups));
+  progressBar.style.width = `${(unlockedGroups.length / 5) * 100}%`;
 }
 
 // 5. Onboarding
@@ -301,6 +309,7 @@ tabButtons.forEach(btn => {
     letterButtons.forEach(b => b.classList.remove('selected'));
     document.querySelector('.letter-btn[data-letter="all"]').classList.add('selected');
     preloadAssets(letterGroups[group]);
+    mascot.classList.add('wave'); // Wave on tab change
   });
 });
 
@@ -324,6 +333,7 @@ letterButtons.forEach(btn => {
 spinBtn.addEventListener('click', () => {
   ansEl.textContent = '';
   imgEl.classList.add('spinning');
+  if (navigator.vibrate) navigator.vibrate(200); // Haptic feedback
   const pool = getPool();
   if (!pool.length) {
     qEl.textContent = `No words for “${selectedLetter.toUpperCase()}”`;
@@ -385,6 +395,12 @@ playBtn.addEventListener('click', () => {
     addConfetti();
     correctCount = 0;
   }
+  if (navigator.vibrate) navigator.vibrate(200); // Haptic feedback
+  mascot.src = 'images/mascot-happy.png'; // Change to happy mascot
+  setTimeout(() => { mascot.src = 'images/mascot.png'; }, 2000); // Revert after 2s
+  const utter = new SpeechSynthesisUtterance('Great job!');
+  if (selectedVoice) utter.voice = selectedVoice;
+  window.speechSynthesis.speak(utter);
 });
 
 // 10. Text-to-speech
