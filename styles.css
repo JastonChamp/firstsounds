@@ -252,6 +252,7 @@ body.dark-mode .tab-btn {
 .tab-btn:hover, .tab-btn.selected {
   background-color: var(--accent-dark);
   color: #fff; /* White text remains readable */
+  animation: glow 1s infinite alternate; /* Glow on hover */
 }
 
 .letter-grid {
@@ -275,7 +276,7 @@ body.dark-mode .tab-btn {
   border-radius: 30px; /* Rounder */
   cursor: pointer;
   color: #333; /* Darker text color for light mode */
-  transition: transform 0.2s, background-color 0.3s;
+  transition: background-color 0.3s;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   min-width: 60px; /* Larger touch target */
   min-height: 60px;
@@ -287,10 +288,9 @@ body.dark-mode .letter-btn {
 
 .letter-btn:hover {
   background-color: #ffd700;
-  transform: scale(1.05); /* Reduced scale for less rigor */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   color: #333; /* Maintain darker text color */
-  animation: bounce 0.2s ease-in-out; /* Shorter duration */
+  animation: glow 1s infinite alternate; /* Glow instead of bounce */
 }
 
 .letter-btn:focus, .letter-btn.selected {
@@ -314,11 +314,6 @@ body.dark-mode .letter-btn {
   0% { transform: scale(1); }
   50% { transform: scale(1.15); }
   100% { transform: scale(1); }
-}
-
-@keyframes bounce {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); } /* Reduced scale */
 }
 
 .word-display {
@@ -407,7 +402,7 @@ button:not(.letter-btn) {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  transition: transform 0.2s, background 0.3s;
+  transition: background 0.3s;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   min-width: 60px; /* Larger touch target */
   min-height: 60px;
@@ -420,9 +415,8 @@ button .icon {
 
 button:hover {
   background: linear-gradient(135deg, var(--button-bg-end), var(--button-bg-start));
-  transform: scale(1.05); /* Reduced scale */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  animation: bounce 0.2s ease-in-out; /* Shorter duration */
+  animation: glow 1s infinite alternate; /* Glow instead of bounce */
 }
 
 button:disabled {
