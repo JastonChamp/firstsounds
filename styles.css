@@ -30,8 +30,8 @@ body.dark-mode {
 
 body {
   font-family: 'Comic Neue', sans-serif;
- background: url('images/background.png') center/cover no-repeat,
-            linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%); /* Gradient with image overlay */
+  background: url('images/background.png') center/cover no-repeat,
+              linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
   background-size: cover; /* Covers full screen; use 'contain' if you want no cropping */
   background-position: center; /* Centers the image */
   background-repeat: no-repeat; /* No tiling */
@@ -177,6 +177,7 @@ body {
 #settings-button .emoji {
   font-size: 1.4rem;
 }
+
 #settings-button:focus {
   outline: 3px solid var(--highlight-color);
 }
@@ -188,6 +189,7 @@ body {
 #theme-toggle .label {
   font-size: 0.9rem;
 }
+
 #theme-toggle:focus {
   outline: 3px solid var(--highlight-color);
 }
