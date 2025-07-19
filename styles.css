@@ -33,11 +33,12 @@ body {
   background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
   color: var(--text-color);
   display: flex;
-  height: 100vh;
-  align-items: center;
+  align-items: flex-start; /* Change from center to start for better top visibility */
   justify-content: center;
+  min-height: 100vh; /* Min-height instead of height for scrollability */
   margin: 0;
   font-size: 18px; /* Larger base font */
+  overflow-y: auto; /* Enable scrolling if content overflows */
 }
 
 .onboarding-modal {
@@ -135,6 +136,7 @@ body {
   max-width: 400px; /* Slightly wider for breathing room */
   border: 3px solid var(--highlight-color);
   position: relative;
+  margin-top: 20px; /* Add top margin to push down from viewport top */
 }
 
 .star-counter {
@@ -193,7 +195,7 @@ body {
 .mascot {
   width: 60px;
   position: absolute;
-  top: -40px;
+  top: -20px; /* Reduced negative top to avoid clipping */
   left: 20px;
   transform-origin: bottom center; /* For wave animation */
 }
@@ -469,5 +471,16 @@ button:focus {
 @media (min-width: 600px) {
   .spinner-container {
     max-width: 600px;
+  }
+}
+
+@media (min-width: 1024px) {
+  body {
+    align-items: center; /* Re-center on very large screens if needed */
+  }
+  .spinner-container {
+    margin-top: 40px; /* Extra top margin for desktops */
+    max-height: 90vh; /* Cap height to fit viewport */
+    overflow-y: auto; /* Scroll if too tall */
   }
 }
