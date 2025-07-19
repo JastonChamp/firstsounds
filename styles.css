@@ -197,16 +197,13 @@ body {
 .welcome-message {
   position: relative;
 }
-
-.banner img {
-  width: 100%;
-  height: auto;
-  display: block;
+background: url('images/banner.png') center/contain no-repeat;
+  height: 150px;
+  padding-top: 150px;
 }
 
-.banner {
-  margin-bottom: 1rem;
-  max-width: 100%;
+body.dark-mode .welcome-message {
+  filter: brightness(0.8);
 }
 
 .mascot {
@@ -376,7 +373,13 @@ body.dark-mode .letter-btn {
   left: 0;
   z-index: 2;
 }
+transform-origin: center;
+  animation: rotateFrame 1.5s linear;
+}
 
+@keyframes rotateFrame {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 @keyframes spin {
   0% { transform: translate(-50%, -50%) rotate(0deg); }
   100% { transform: translate(-50%, -50%) rotate(360deg); }
@@ -499,5 +502,11 @@ button:focus {
     margin-top: 40px; /* Extra top margin for desktops */
     max-height: 90vh; /* Cap height to fit viewport */
     overflow-y: auto; /* Scroll if too tall */
+  }
+}
+
+@media (min-width: 768px) and (orientation: landscape) {
+  .spinner-container {
+    max-width: 700px;
   }
 }
