@@ -30,27 +30,25 @@ body.dark-mode {
 
 body {
   font-family: 'Comic Neue', sans-serif;
-  background: url('images/background.png') center/cover no-repeat,
-              linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
-  background-size: cover; /* Covers full screen; use 'contain' if you want no cropping */
-  background-position: center; /* Centers the image */
-  background-repeat: no-repeat; /* No tiling */
+  background:
+    url('images/background.png') center/cover no-repeat,
+    linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   color: var(--text-color);
   display: flex;
-  align-items: flex-start; /* Change from center to start for better top visibility */
+  align-items: flex-start; /* for top‑aligned layout */
   justify-content: center;
-  min-height: 100vh; /* Min-height instead of height for scrollability */
-  margin: 0;
-  font-size: 18px; /* Larger base font */
-  overflow-y: auto; /* Enable scrolling if content overflows */
+  min-height: 100vh;
+  font-size: 18px;
+  overflow-y: auto;
 }
 
 .onboarding-modal {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   background: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
@@ -60,10 +58,8 @@ body {
 
 .settings-modal {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   background: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
@@ -102,6 +98,10 @@ body {
   cursor: pointer;
 }
 
+#start-button:hover {
+  background: var(--primary-hover-color);
+}
+
 #close-settings {
   font-family: 'Comic Neue', sans-serif;
   font-size: 1.2rem;
@@ -126,27 +126,22 @@ body {
   font-family: 'Comic Neue', sans-serif;
 }
 
-#start-button:hover {
-  background: var(--primary-hover-color);
-}
-
 .spinner-container {
   background: var(--container-bg);
-  padding: 3rem; /* Increased padding */
+  padding: 3rem;
   border-radius: 20px;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
   text-align: center;
   width: 90%;
-  max-width: 400px; /* Slightly wider for breathing room */
+  max-width: 400px;
   border: 3px solid var(--highlight-color);
   position: relative;
-  margin-top: 20px; /* Add top margin to push down from viewport top */
+  margin-top: 20px;
 }
 
 .star-counter {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 10px; right: 10px;
   font-size: 1.5rem;
   color: var(--highlight-color);
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
@@ -154,42 +149,29 @@ body {
 
 #theme-toggle {
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 10px; left: 10px;
   background: transparent;
   border: none;
   color: var(--highlight-color);
   font-size: 1.4rem;
   cursor: pointer;
-}
-
-#settings-button {
-  position: absolute;
-  top: 50px;
-  left: 10px;
-  background: transparent;
-  border: none;
-  color: var(--highlight-color);
-  font-size: 1.4rem;
-  cursor: pointer;
-}
-
-#settings-button .emoji {
-  font-size: 1.4rem;
-}
-
-#settings-button:focus {
-  outline: 3px solid var(--highlight-color);
-}
-
-#theme-toggle .emoji {
-  font-size: 1.4rem;
 }
 
 #theme-toggle .label {
   font-size: 0.9rem;
 }
 
+#settings-button {
+  position: absolute;
+  top: 50px; left: 10px;
+  background: transparent;
+  border: none;
+  color: var(--highlight-color);
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+#settings-button:focus,
 #theme-toggle:focus {
   outline: 3px solid var(--highlight-color);
 }
@@ -197,21 +179,48 @@ body {
 .welcome-message {
   position: relative;
 }
-background: url('images/banner.png') center/contain no-repeat;
-  height: 150px;
-  padding-top: 150px;
+
+/* ── Banner (inside .welcome-message) ── */
+.banner {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto 1rem;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-body.dark-mode .welcome-message {
+.banner img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+body.dark-mode .banner img {
   filter: brightness(0.8);
+}
+
+/* ── Mascot under banner ── */
+.mascot-container {
+  text-align: center;
+  margin: 0 auto 1rem;
+}
+
+.mascot-container img {
+  width: 120px;
+  height: auto;
+  display: inline-block;
+}
+
+body.dark-mode .mascot-container img {
+  filter: brightness(0.9);
 }
 
 .mascot {
   width: 60px;
   position: absolute;
-  top: -20px; /* Reduced negative top to avoid clipping */
-  left: 20px;
-  transform-origin: bottom center; /* For wave animation */
+  top: -20px; left: 20px;
+  transform-origin: bottom center;
 }
 
 .mascot.wave {
@@ -219,10 +228,10 @@ body.dark-mode .welcome-message {
 }
 
 @keyframes wave {
-  0% { transform: rotate(0deg); }
-  25% { transform: rotate(15deg); }
-  50% { transform: rotate(0deg); }
-  75% { transform: rotate(-15deg); }
+  0%   { transform: rotate(0deg); }
+  25%  { transform: rotate(15deg); }
+  50%  { transform: rotate(0deg); }
+  75%  { transform: rotate(-15deg); }
   100% { transform: rotate(0deg); }
 }
 
@@ -236,7 +245,7 @@ h1 {
 .letter-group-tabs {
   display: flex;
   justify-content: center;
-  gap: 1rem; /* Wider gap */
+  gap: 1rem;
   margin-bottom: 1rem;
 }
 
@@ -250,25 +259,26 @@ h1 {
 
 .tab-btn {
   font-family: 'Comic Neue', sans-serif;
-  font-size: 1.4rem; /* Larger font */
+  font-size: 1.4rem;
   font-weight: bold;
   padding: 0.5rem 1rem;
   background-color: var(--accent-light);
   border: 2px solid var(--accent-dark);
-  border-radius: 30px; /* Rounder */
+  border-radius: 30px;
   cursor: pointer;
+  color: #333;
   transition: background-color 0.3s;
-  color: #333; /* Darker text color for light mode */
 }
 
 body.dark-mode .tab-btn {
-  color: var(--text-color); /* Use light text color in dark mode */
+  color: var(--text-color);
 }
 
-.tab-btn:hover, .tab-btn.selected {
+.tab-btn:hover,
+.tab-btn.selected {
   background-color: var(--accent-dark);
-  color: #fff; /* White text remains readable */
-  animation: glow 1s infinite alternate; /* Glow on hover */
+  color: #fff;
+  animation: glow 1s infinite alternate;
 }
 
 .letter-grid {
@@ -284,51 +294,49 @@ body.dark-mode .tab-btn {
 
 .letter-btn {
   font-family: 'Comic Neue', sans-serif;
-  font-size: 1.4rem; /* Larger font */
+  font-size: 1.4rem;
   font-weight: bold;
   padding: 0.5rem;
   background-color: var(--highlight-color);
   border: 2px solid #ffb300;
-  border-radius: 30px; /* Rounder */
+  border-radius: 30px;
   cursor: pointer;
-  color: #333; /* Darker text color for light mode */
+  color: #333;
   transition: background-color 0.3s;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  min-width: 60px; /* Larger touch target */
+  min-width: 60px;
   min-height: 60px;
 }
 
 body.dark-mode .letter-btn {
-  color: var(--text-color); /* Use light text color in dark mode */
+  color: var(--text-color);
 }
 
 .letter-btn:hover {
   background-color: #ffd700;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  color: #333; /* Maintain darker text color */
-  animation: glow 1s infinite alternate; /* Glow instead of bounce */
+  animation: glow 1s infinite alternate;
 }
 
-.letter-btn:focus, .letter-btn.selected {
+.letter-btn:focus,
+.letter-btn.selected {
   background-color: #ffd700;
   border: 3px solid var(--accent-color);
-  outline: none;
   animation: pulse 0.5s ease-in-out;
-  color: #333; /* Maintain darker text color */
 }
 
 .letter-btn[data-letter="all"] {
-  animation: glow 1s infinite alternate; /* Glowing for All button */
+  animation: glow 1s infinite alternate;
 }
 
 @keyframes glow {
-  0% { box-shadow: 0 0 5px var(--highlight-color); }
+  0%   { box-shadow: 0 0 5px var(--highlight-color); }
   100% { box-shadow: 0 0 15px var(--highlight-color); }
 }
 
 @keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.15); }
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.15); }
   100% { transform: scale(1); }
 }
 
@@ -349,45 +357,34 @@ body.dark-mode .letter-btn {
 }
 
 .image-frame {
-  height: 220px;
-  width: 220px;
+  height: 220px; width: 220px;
   margin: 0 auto 1.5rem;
   position: relative;
 }
 
 #word-image {
-  height: 170px;
-  width: 170px;
+  height: 170px; width: 170px;
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1;
 }
 
 #frame-overlay {
-  width: 100%;
-  height: 100%;
+  width: 100%; height: 100%;
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 0; left: 0;
   z-index: 2;
 }
-transform-origin: center;
-  animation: rotateFrame 1.5s linear;
-}
 
-@keyframes rotateFrame {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
 @keyframes spin {
-  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  0%   { transform: translate(-50%, -50%) rotate(0deg); }
   100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 @keyframes bounce {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); }
-  50% { transform: translate(-50%, -50%) scale(1.05); }
+  0%,100% { transform: translate(-50%, -50%) scale(1); }
+  50%     { transform: translate(-50%, -50%) scale(1.05); }
 }
 
 .spinning {
@@ -414,10 +411,9 @@ transform-origin: center;
 
 button:not(.letter-btn) {
   font-family: 'Comic Neue', sans-serif;
-  font-size: 0;
   padding: 0.8rem;
   border: none;
-  border-radius: 30px; /* Rounder */
+  border-radius: 30px;
   cursor: pointer;
   background: linear-gradient(135deg, var(--button-bg-start), var(--button-bg-end));
   color: #fff;
@@ -426,7 +422,7 @@ button:not(.letter-btn) {
   gap: 0.5rem;
   transition: background 0.3s;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  min-width: 60px; /* Larger touch target */
+  min-width: 60px;
   min-height: 60px;
 }
 
@@ -437,8 +433,7 @@ button .icon {
 
 button:hover {
   background: linear-gradient(135deg, var(--button-bg-end), var(--button-bg-start));
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  animation: glow 1s infinite alternate; /* Glow instead of bounce */
+  animation: glow 1s infinite alternate;
 }
 
 button:disabled {
@@ -452,7 +447,7 @@ button:focus {
 }
 
 #play-sound-button::before {
-  content: '〰️'; /* Sound wave emoji */
+  content: '〰️';
   font-size: 1rem;
   margin-right: 0.5rem;
 }
@@ -465,8 +460,8 @@ button:focus {
 }
 
 @keyframes celebrate {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.2); }
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.2); }
   100% { transform: scale(1); }
 }
 
@@ -475,7 +470,7 @@ button:focus {
 }
 
 @keyframes confetti {
-  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
   100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
 }
 
@@ -494,19 +489,19 @@ button:focus {
   }
 }
 
-@media (min-width: 1024px) {
-  body {
-    align-items: center; /* Re-center on very large screens if needed */
-  }
-  .spinner-container {
-    margin-top: 40px; /* Extra top margin for desktops */
-    max-height: 90vh; /* Cap height to fit viewport */
-    overflow-y: auto; /* Scroll if too tall */
-  }
-}
-
 @media (min-width: 768px) and (orientation: landscape) {
   .spinner-container {
     max-width: 700px;
+  }
+}
+
+@media (min-width: 1024px) {
+  body {
+    align-items: center;
+  }
+  .spinner-container {
+    margin-top: 40px;
+    max-height: 90vh;
+    overflow-y: auto;
   }
 }
