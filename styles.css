@@ -200,22 +200,6 @@ body.dark-mode .banner img {
   filter: brightness(0.8);
 }
 
-/* ── Mascot under banner ── */
-.mascot-container {
-  text-align: center;
-  margin: 0 auto 1rem;
-}
-
-.mascot-container img {
-  width: 120px;
-  height: auto;
-  display: inline-block;
-}
-
-body.dark-mode .mascot-container img {
-  filter: brightness(0.9);
-}
-
 .mascot {
   width: 60px;
   position: absolute;
