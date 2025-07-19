@@ -287,10 +287,10 @@ body.dark-mode .letter-btn {
 
 .letter-btn:hover {
   background-color: #ffd700;
-  transform: scale(1.1);
+  transform: scale(1.05); /* Reduced scale for less rigor */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   color: #333; /* Maintain darker text color */
-  animation: bounce 0.3s ease-in-out; /* Bounce on hover */
+  animation: bounce 0.2s ease-in-out; /* Shorter duration */
 }
 
 .letter-btn:focus, .letter-btn.selected {
@@ -318,7 +318,7 @@ body.dark-mode .letter-btn {
 
 @keyframes bounce {
   0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
+  50% { transform: scale(1.05); } /* Reduced scale */
 }
 
 .word-display {
@@ -420,9 +420,9 @@ button .icon {
 
 button:hover {
   background: linear-gradient(135deg, var(--button-bg-end), var(--button-bg-start));
-  transform: scale(1.05);
+  transform: scale(1.05); /* Reduced scale */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  animation: bounce 0.3s ease-in-out; /* Bounce on hover */
+  animation: bounce 0.2s ease-in-out; /* Shorter duration */
 }
 
 button:disabled {
