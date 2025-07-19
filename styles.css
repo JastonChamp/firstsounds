@@ -198,6 +198,17 @@ body {
   position: relative;
 }
 
+.banner img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.banner {
+  margin-bottom: 1rem;
+  max-width: 100%;
+}
+
 .mascot {
   width: 60px;
   position: absolute;
