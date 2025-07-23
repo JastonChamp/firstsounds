@@ -382,7 +382,7 @@ playBtn.addEventListener('click', () => {
     ansEl.textContent = 'Oops! Sound not found.';
   };
   audio.play();
-  ansEl.textContent = `▶ The first sound is /${letter}/. Great job!`;
+ansEl.textContent = `▶ The first sound is /${letter}/.`;
   ansEl.classList.add('correct');
   correctCount++;
   starCount++;
@@ -398,10 +398,7 @@ playBtn.addEventListener('click', () => {
   if (navigator.vibrate) navigator.vibrate(200); // Haptic feedback
   mascot.src = 'images/mascot-happy.png'; // Change to happy mascot
   setTimeout(() => { mascot.src = 'images/mascot.png'; }, 2000); // Revert after 2s
-  const utter = new SpeechSynthesisUtterance('Great job!');
-  if (selectedVoice) utter.voice = selectedVoice;
-  window.speechSynthesis.speak(utter);
-});
+  });
 
 // 10. Text-to-speech
 readQuestionBtn.addEventListener('click', () => {
