@@ -2,11 +2,11 @@
 
 const spinnerItems = {
   // Expanded slightly for variety
-  "A": ["alligator", "amulet", "anchor", "ant", "apple", "arrow", "astronaut", "ax", "ape", "art"],
+  "A": ["alligator", "amulet", "anchor", "ant", "apple", "arrow", "astronaut", "ax"],
   "B": ["bag", "bat", "bed", "bell", "bird", "book", "box", "bread", "bug", "bus", "bike", "boat"],
   "C": ["cab", "can", "cap", "car", "cat", "cod", "cot", "cub", "cup", "cake", "cow"],
   "D": ["dog", "duck", "dinosaur", "drum", "doll", "door", "desk", "diamond", "die", "dad"],
-  "E": ["egg", "elephant", "elf", "end", "enter", "envelope", "exit", "ear", "eye"],
+  "E": ["egg", "elephant", "elf", "end", "enter", "envelope", "exit"],
   "F": ["fish", "frog", "fan", "fire", "feather", "fork", "fox", "fence", "foot", "flag"],
   "G": ["goat", "gift", "girl", "guitar", "grapes", "glasses", "goose", "gloves", "gate"],
   "H": ["hat", "hen", "house", "hippo", "hammer", "hand", "helicopter", "hamburger", "hill"],
