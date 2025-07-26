@@ -1,30 +1,32 @@
-// Words are bundled directly so the app can run without a web server
+// Improved JS: Added guessing mechanism, disabled tabs styling, unlock notification, expanded words, TTS cancel
+
 const spinnerItems = {
-  "A": ["alligator", "amulet", "anchor", "ant", "apple", "arrow", "astronaut", "ax"],
-  "B": ["bag", "bat", "bed", "bell", "bird", "book", "box", "bread", "bug", "bus"],
-  "C": ["cab", "can", "cap", "car", "cat", "cod", "cot", "cub", "cup"],
-  "D": ["dog", "duck", "dinosaur", "drum", "doll", "door", "desk", "diamond", "die"],
-  "E": ["egg", "elephant", "elf", "end", "enter", "envelope", "exit"],
-  "F": ["fish", "frog", "fan", "fire", "feather", "fork", "fox", "fence", "foot"],
-  "G": ["goat", "gift", "girl", "guitar", "grapes", "glasses", "goose", "gloves"],
-  "H": ["hat", "hen", "house", "hippo", "hammer", "hand", "helicopter", "hamburger"],
-  "I": ["igloo", "insect", "ink", "iguana", "infant", "internet"],
-  "J": ["jam", "jelly", "jacket", "juice", "jump", "jug", "jet", "jeep"],
-  "K": ["kangaroo", "kite", "key", "king", "kitten", "kettle", "kiwi", "keyboard", "kick"],
-  "L": ["lion", "leaf", "lamp", "ladder", "lemon", "lollipop", "lock", "ladybug", "log"],
-  "M": ["monkey", "moon", "mouse", "mug", "map", "milk", "mop"],
-  "N": ["nose", "nest", "net", "nail", "nap", "nine", "note", "needle"],
-  "O": ["octopus", "ostrich", "olive", "ox", "onion"],
-  "P": ["pig", "pen", "pan", "pizza", "pencil", "peach", "panda", "pumpkin"],
-  "Q": ["queen", "quilt", "quail", "quick", "queue", "quiet"],
-  "R": ["rabbit", "robot", "rainbow", "ring", "rose", "ruler", "rocket", "raft"],
-  "S": ["sun", "sock", "sandwich", "star", "seal", "soap", "snowman"],
-  "T": ["tiger", "tap", "top", "tooth", "tent", "tomato", "train", "tree"],
-  "U": ["umbrella", "up", "upset", "unzip", "upstairs", "undo"],
-  "V": ["van", "vase", "violin", "vegetables", "vest", "vulture", "volcano"],
-  "W": ["whale", "watch", "watermelon", "web", "wagon", "worm", "witch", "window"],
-  "Y": ["yarn", "yam", "yawn", "yolk", "yoyo"],
-  "Z": ["zebra", "zoo", "zip", "zero", "zap", "zigzag"]
+  // Expanded slightly for variety
+  "A": ["alligator", "amulet", "anchor", "ant", "apple", "arrow", "astronaut", "ax", "ape", "art"],
+  "B": ["bag", "bat", "bed", "bell", "bird", "book", "box", "bread", "bug", "bus", "bike", "boat"],
+  "C": ["cab", "can", "cap", "car", "cat", "cod", "cot", "cub", "cup", "cake", "cow"],
+  "D": ["dog", "duck", "dinosaur", "drum", "doll", "door", "desk", "diamond", "die", "dad"],
+  "E": ["egg", "elephant", "elf", "end", "enter", "envelope", "exit", "ear", "eye"],
+  "F": ["fish", "frog", "fan", "fire", "feather", "fork", "fox", "fence", "foot", "flag"],
+  "G": ["goat", "gift", "girl", "guitar", "grapes", "glasses", "goose", "gloves", "gate"],
+  "H": ["hat", "hen", "house", "hippo", "hammer", "hand", "helicopter", "hamburger", "hill"],
+  "I": ["igloo", "insect", "ink", "iguana", "infant", "internet", "ice", "island"],
+  "J": ["jam", "jelly", "jacket", "juice", "jump", "jug", "jet", "jeep", "jar"],
+  "K": ["kangaroo", "kite", "key", "king", "kitten", "kettle", "kiwi", "keyboard", "kick", "kid"],
+  "L": ["lion", "leaf", "lamp", "ladder", "lemon", "lollipop", "lock", "ladybug", "log", "lake"],
+  "M": ["monkey", "moon", "mouse", "mug", "map", "milk", "mop", "man", "mat"],
+  "N": ["nose", "nest", "net", "nail", "nap", "nine", "note", "needle", "nut"],
+  "O": ["octopus", "ostrich", "olive", "ox", "onion", "owl", "orange"],
+  "P": ["pig", "pen", "pan", "pizza", "pencil", "peach", "panda", "pumpkin", "pot", "pie"],
+  "Q": ["queen", "quilt", "quail", "quick", "queue", "quiet", "quiz"],
+  "R": ["rabbit", "robot", "rainbow", "ring", "rose", "ruler", "rocket", "raft", "rat", "run"],
+  "S": ["sun", "sock", "sandwich", "star", "seal", "soap", "snowman", "sit", "sad"],
+  "T": ["tiger", "tap", "top", "tooth", "tent", "tomato", "train", "tree", "ten", "toy"],
+  "U": ["umbrella", "up", "upset", "unzip", "upstairs", "undo", "us"],
+  "V": ["van", "vase", "violin", "vegetables", "vest", "vulture", "volcano", "vet"],
+  "W": ["whale", "watch", "watermelon", "web", "wagon", "worm", "witch", "window", "win"],
+  "Y": ["yarn", "yam", "yawn", "yolk", "yoyo", "yes"],
+  "Z": ["zebra", "zoo", "zip", "zero", "zap", "zigzag", "zest"]
 };
 
 const letterGroups = {
@@ -40,7 +42,8 @@ const CONSTANTS = {
   CONFETTI_COUNT: 20,
   STARS_TO_UNLOCK: 5,
   CONFETTI_COLORS: ['#ffeb3b', '#ff6f61', '#4a90e2'],
-  CONFETTI_COLORS_DARK: ['#ffd54f', '#ff9e80', '#4a90e2']
+  CONFETTI_COLORS_DARK: ['#ffd54f', '#ff9e80', '#4a90e2'],
+  GUESS_OPTIONS: 4 // Number of guess guess buttons
 };
 
 // DOM Elements (cached)
@@ -66,7 +69,8 @@ const elements = {
   closeSettingsBtn: document.getElementById('close-settings'),
   resetProgressBtn: document.getElementById('reset-progress'),
   progressBar: document.getElementById('progress-bar'),
-  mascot: document.querySelector('.mascot')
+  mascot: document.querySelector('.mascot'),
+  guessOptions: document.getElementById('guess-options')
 };
 
 // State
@@ -78,6 +82,7 @@ let starCount = parseInt(localStorage.getItem('starCount') || '0', 10);
 let completedWords = new Set(JSON.parse(localStorage.getItem('completedWords') || '[]'));
 let unlockedGroups = JSON.parse(localStorage.getItem('unlockedGroups') || '[1]');
 let selectedVoice = null;
+let currentUtterance = null; // For TTS cancel
 
 // Init
 function init() {
@@ -86,7 +91,7 @@ function init() {
   applyTheme(localStorage.getItem('theme') === 'dark');
   preloadAssets(letterGroups[selectedGroup]);
   elements.mascot.classList.add('wave');
-  elements.spinBtn.disabled = false; // Enable after init
+  elements.spinBtn.disabled = false;
   if (!localStorage.getItem('onboardingSeen')) {
     elements.onboardingModal.style.display = 'flex';
   }
@@ -99,8 +104,7 @@ function updateUI() {
   elements.tabButtons.forEach(btn => {
     const group = parseInt(btn.dataset.group);
     btn.disabled = !unlockedGroups.includes(group);
-    if (btn.disabled) btn.classList.add('disabled');
-    else btn.classList.remove('disabled');
+    btn.classList.toggle('disabled', btn.disabled);
   });
 }
 
@@ -117,6 +121,7 @@ function checkUnlockNextGroup() {
   if (nextGroup <= 5 && starCount >= (unlockedGroups.length * CONSTANTS.STARS_TO_UNLOCK)) {
     unlockedGroups.push(nextGroup);
     saveProgress();
+    alert(`🎉 Unlocked Group ${nextGroup}!`);
   }
 }
 
@@ -126,7 +131,7 @@ function resetProgress() {
   unlockedGroups = [1];
   selectedGroup = 1;
   saveProgress();
-  location.reload(); // Simple reload to reset UI
+  location.reload();
 }
 
 function applyTheme(dark) {
@@ -200,8 +205,7 @@ function populateVoiceSelect(voices) {
 
 function loadVoices() {
   const voices = speechSynthesis.getVoices();
-  if (!voices.length || voicesLoaded) return;
-  voicesLoaded = true;
+  if (!voices.length) return;
 
   const storedName = localStorage.getItem('selectedVoiceName');
   if (storedName) {
@@ -225,28 +229,12 @@ if (elements.voiceSelect) {
   });
 }
 
-// Handle voice loading
 speechSynthesis.addEventListener('voiceschanged', loadVoices);
 loadVoices();
 
-// Preload (optimized to current only)
-function preloadAssets(letters) {
-  letters.forEach(letter => {
-    spinnerItems[letter]?.forEach(word => {
-      const baseName = toFilename(word);
-      const img = new Image();
-      img.src = `images/${letter.toLowerCase()}_${baseName}.webp`;
-      // Audio preload not needed as created on demand
-    });
-  });
-}
-
-// Helpers
+// Helper functions
 function toFilename(word) {
-  return word
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '_')
-    .replace(/^_+|_+$/g, '');
+  return word.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
 }
 
 function resetLetterIfDone(letter) {
@@ -276,6 +264,16 @@ function getPool() {
   return filtered;
 }
 
+function preloadAssets(letters) {
+  letters.forEach(letter => {
+    spinnerItems[letter]?.forEach(word => {
+      const baseName = toFilename(word);
+      const img = new Image();
+      img.src = `images/${letter.toLowerCase()}_${baseName}.webp`;
+    });
+  });
+}
+
 function addConfetti() {
   const colors = document.body.classList.contains('dark-mode') ? CONSTANTS.CONFETTI_COLORS_DARK : CONSTANTS.CONFETTI_COLORS;
   for (let i = 0; i < CONSTANTS.CONFETTI_COUNT; i++) {
@@ -287,6 +285,60 @@ function addConfetti() {
     document.body.appendChild(confetti);
     setTimeout(() => confetti.remove(), 2000);
   }
+}
+
+// New: Guessing logic
+function startGuessing() {
+  elements.guessOptions.innerHTML = '';
+  elements.guessOptions.style.display = 'grid';
+  const correctLetter = currentWord[0].toUpperCase();
+  const groupLetters = letterGroups[selectedGroup].filter(l => l !== correctLetter);
+  const distractors = groupLetters.sort(() => Math.random() - 0.5).slice(0, CONSTANTS.GUESS_OPTIONS - 1);
+  const options = [correctLetter, ...distractors].sort(() => Math.random() - 0.5);
+
+  options.forEach(l => {
+    const btn = document.createElement('button');
+    btn.textContent = l;
+    btn.addEventListener('click', () => handleGuess(l, correctLetter));
+    elements.guessOptions.appendChild(btn);
+  });
+  elements.spinBtn.disabled = true;
+  elements.playBtn.disabled = true;
+  elements.qEl.textContent = `Guess the first sound of “${currentWord}”!`;
+}
+
+function handleGuess(guessed, correct) {
+  if (guessed === correct) {
+    elements.ansEl.textContent = `Correct! The first sound is /${guessed.toLowerCase()}/.`;
+    elements.ansEl.classList.add('correct');
+    correctCount++;
+    starCount++;
+    elements.starCountEl.textContent = starCount;
+    saveProgress();
+    addConfetti();
+    if (correctCount >= CONSTANTS.STREAK_THRESHOLD) {
+      elements.ansEl.textContent += " 🎉 Yay! Streak bonus!";
+      correctCount = 0;
+    }
+    elements.mascot.src = 'images/mascot-happy.png';
+    setTimeout(() => { elements.mascot.src = 'images/mascot.png'; }, 2000);
+  } else {
+    elements.ansEl.textContent = `Try again! Hint: Listen to the word.`;
+    if (navigator.vibrate) navigator.vibrate([100, 30, 100]);
+  }
+  revealSound(guessed === correct);
+}
+
+function revealSound(isCorrect) {
+  const letter = currentWord[0].toLowerCase();
+  const audio = new Audio(`audio/${letter}.mp3`);
+  audio.play().catch(() => elements.ansEl.textContent = 'Oops! Sound not found.');
+  elements.guessOptions.style.display = 'none';
+  elements.spinBtn.disabled = false;
+  elements.playBtn.disabled = false;
+  completedWords.add(currentWord);
+  resetLetterIfDone(currentWord[0].toUpperCase());
+  if (navigator.vibrate) navigator.vibrate(200);
 }
 
 // Event Listeners
@@ -333,7 +385,11 @@ function attachEventListeners() {
       elements.letterButtons.forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
       new Audio('audio/pop.mp3').play();
-      preloadAssets(selectedLetter === 'all' ? letterGroups[selectedGroup] : [selectedLetter]);
+      if (selectedLetter === 'all') {
+        preloadAssets(letterGroups[selectedGroup]);
+      } else {
+        preloadAssets([selectedLetter]);
+      }
     });
   });
 
@@ -346,6 +402,7 @@ function attachEventListeners() {
       elements.qEl.textContent = `No words for “${selectedLetter.toUpperCase()}”`;
       elements.currentWordEl.textContent = '';
       elements.imgEl.src = 'images/placeholder.png';
+      elements.imgEl.onerror = null;
       return;
     }
     currentWord = pool[Math.floor(Math.random() * pool.length)];
@@ -353,20 +410,25 @@ function attachEventListeners() {
     const letter = currentWord[0].toLowerCase();
     elements.imgEl.src = `images/${letter}_${baseName}.webp`;
     elements.imgEl.alt = currentWord;
-    elements.imgEl.onerror = () => { elements.imgEl.src = `images/${letter}_${baseName}.png`; };
+    elements.imgEl.onerror = () => {
+      elements.imgEl.src = `images/${letter}_${baseName}.png`;
+    };
     elements.qEl.textContent = `What is the first sound of “${currentWord}”?`;
     elements.currentWordEl.textContent = currentWord;
     // Auto-play word TTS
-    const utterance = new SpeechSynthesisUtterance(currentWord);
-    if (selectedVoice) utterance.voice = selectedVoice;
-    speechSynthesis.speak(utterance);
+    if (currentUtterance) speechSynthesis.cancel();
+    currentUtterance = new SpeechSynthesisUtterance(currentWord);
+    if (selectedVoice) currentUtterance.voice = selectedVoice;
+    speechSynthesis.speak(currentUtterance);
+    startGuessing(); // Start guessing mode
   });
 
   elements.hearWordBtn.addEventListener('click', () => {
     if (currentWord) {
-      const utterance = new SpeechSynthesisUtterance(currentWord);
-      if (selectedVoice) utterance.voice = selectedVoice;
-      speechSynthesis.speak(utterance);
+      if (currentUtterance) speechSynthesis.cancel();
+      currentUtterance = new SpeechSynthesisUtterance(currentWord);
+      if (selectedVoice) currentUtterance.voice = selectedVoice;
+      speechSynthesis.speak(currentUtterance);
     }
   });
 
@@ -376,32 +438,15 @@ function attachEventListeners() {
       elements.ansEl.textContent = '▶ Spin to hear a sound!';
       return;
     }
-    const letter = currentWord[0].toLowerCase();
-    const audio = new Audio(`audio/${letter}.mp3`);
-    audio.play().catch(() => elements.ansEl.textContent = 'Oops! Sound not found.');
-    elements.ansEl.textContent = `▶ The first sound is /${letter}/.`;
-    elements.ansEl.classList.add('correct');
-    correctCount++;
-    starCount++;
-    elements.starCountEl.textContent = starCount;
-    saveProgress();
-    completedWords.add(currentWord);
-    resetLetterIfDone(currentWord[0].toUpperCase());
-    if (correctCount >= CONSTANTS.STREAK_THRESHOLD) {
-      elements.ansEl.textContent += " 🎉 Yay! Streak bonus!";
-      addConfetti();
-      correctCount = 0;
-    }
-    if (navigator.vibrate) navigator.vibrate(200);
-    elements.mascot.src = 'images/mascot-happy.png';
-    setTimeout(() => { elements.mascot.src = 'images/mascot.png'; }, 2000);
+    revealSound(false); // Reveal without star
   });
 
   elements.readQuestionBtn.addEventListener('click', () => {
     if (elements.qEl.textContent) {
-      const utterance = new SpeechSynthesisUtterance(elements.qEl.textContent);
-      if (selectedVoice) utterance.voice = selectedVoice;
-      speechSynthesis.speak(utterance);
+      if (currentUtterance) speechSynthesis.cancel();
+      currentUtterance = new SpeechSynthesisUtterance(elements.qEl.textContent);
+      if (selectedVoice) currentUtterance.voice = selectedVoice;
+      speechSynthesis.speak(currentUtterance);
     }
   });
 
