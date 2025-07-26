@@ -38,7 +38,7 @@ body {
   background-repeat: no-repeat;
   color: var(--text-color);
   display: flex;
-  align-items: flex-start; /* for top‑aligned layout */
+  align-items: flex-start; /* for top-aligned layout */
   justify-content: center;
   min-height: 100vh;
   font-size: 18px;
@@ -481,4 +481,30 @@ button:focus {
     max-height: 90vh;
     overflow-y: auto;
   }
+}
+
+/* Improvements: Added theme-aware confetti colors, smoother modal transitions */
+
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  top: -10px;
+  animation: confetti 2s ease-in-out forwards;
+}
+
+body.dark-mode .confetti {
+  background: var(--highlight-color); /* Use variable for better contrast */
+}
+
+.settings-modal, .onboarding-modal {
+  transition: opacity 0.3s ease;
+}
+
+.settings-modal[style*="display: flex"], .onboarding-modal[style*="display: flex"] {
+  opacity: 1;
+}
+
+.settings-modal[style*="display: none"], .onboarding-modal[style*="display: none"] {
+  opacity: 0;
 }
