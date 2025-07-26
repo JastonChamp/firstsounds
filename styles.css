@@ -258,6 +258,13 @@ body.dark-mode .tab-btn {
   animation: glow 1s infinite alternate;
 }
 
+.tab-btn.disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+  border-color: #aaa;
+}
+
 .letter-grid {
   display: none;
   grid-template-columns: repeat(5, 1fr);
@@ -507,4 +514,21 @@ body.dark-mode .confetti {
 
 .settings-modal[style*="display: none"], .onboarding-modal[style*="display: none"] {
   opacity: 0;
+}
+
+/* New for guessing */
+#guess-options button {
+  font-family: 'Comic Neue', sans-serif;
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  background-color: var(--accent-light);
+  border: 2px solid var(--accent-dark);
+  border-radius: 30px;
+  cursor: pointer;
+  color: #333;
+}
+
+#guess-options button:hover {
+  background-color: var(--accent-dark);
+  color: #fff;
 }
